@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robert Kask</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Archivo+Black&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --gray: #888;
+      --light: #f5f4f2;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Archivo', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      mix-blend-mode: normal;
+    }
+
+    header.scrolled {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--white);
+      transition: color 0.3s;
+    }
+
+    header.scrolled .logo { color: var(--black); }
+
+    nav { display: flex; gap: 32px; align-items: center; }
+
+    nav a {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--white);
+      transition: opacity 0.2s, color 0.3s;
+    }
+
+    header.scrolled nav a { color: var(--black); }
+    nav a:hover { opacity: 0.5; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 64px 40px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: #1a1a1a;
+      /* Replace with: background-image: url('photo.jpg'); */
+      background-size: cover;
+      background-position: center top;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.05) 0%,
+        rgba(0,0,0,0.1) 40%,
+        rgba(0,0,0,0.65) 100%
+      );
+    }
+
+    /* placeholder portrait box when no photo */
+    .hero-portrait-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 8vw;
+      z-index: 0;
+    }
+
+    .hero-portrait-placeholder::after {
+      content: '';
+      display: block;
+      width: 340px;
+      height: 440px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px dashed rgba(255,255,255,0.2);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+    }
+
+    .hero-content h1 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(38px, 6vw, 80px);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+
+    .hero-content h1 em {
+      font-family: 'Archivo', sans-serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .hero-content p {
+      font-size: clamp(15px, 1.5vw, 18px);
+      color: rgba(255,255,255,0.82);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .hero-content .btn { border-color: rgba(255,255,255,0.8); color: var(--white); }
+    .hero-content .btn:hover { background: var(--white); color: var(--black); }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--black);
+      border-bottom: 1px solid var(--black);
+      padding: 18px 0;
+      background: var(--white);
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 20s linear infinite;
+    }
+
+    .marquee-track span {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 15px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0 48px;
+      white-space: nowrap;
+    }
+
+    .marquee-track span::after {
+      content: '·';
+      margin-left: 48px;
+      color: var(--gray);
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── SHARED ── */
+    .btn {
+      display: inline-block;
+      padding: 13px 30px;
+      border: 1.5px solid var(--black);
+      font-family: 'Archivo', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s, border-color 0.25s;
+    }
+    .btn:hover { background: var(--black); color: var(--white); }
+
+    section { padding: 100px 40px; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 20px;
+    }
+
+    /* ── ABOUT / INTRO ── */
+    .intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      padding: 100px 40px;
+    }
+
+    .intro-text h2 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(28px, 3.5vw, 48px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+    }
+
+    .intro-text p {
+      font-size: 17px;
+      color: #444;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .intro-text .btn { margin-top: 16px; }
+
+    .intro-image {
+      aspect-ratio: 4/5;
+      background: var(--light);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .intro-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .intro-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #bbb;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── SERVICES GRID ── */
+    .services-section { background: var(--light); }
+
+    .services-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .services-header h2 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(32px, 5vw, 60px);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .service-card {
+      background: var(--white);
+      padding: 56px 40px;
+      transition: background 0.3s;
+    }
+
+    .service-card:hover { background: var(--black); color: var(--white); }
+    .service-card:hover .service-card-num,
+    .service-card:hover p { color: rgba(255,255,255,0.6); }
+    .service-card:hover .btn { border-color: var(--white); color: var(--white); }
+    .service-card:hover .btn:hover { background: var(--white); color: var(--black); }
+
+    .service-card-num {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--gray);
+      margin-bottom: 32px;
+    }
+
+    .service-card h3 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(24px, 2.5vw, 36px);
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+
+    .service-card p {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    /* ── QUOTE ── */
+    .quote-section {
+      text-align: center;
+      padding: 120px 40px;
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .quote-section blockquote {
+      font-family: 'Archivo', sans-serif;
+      font-style: italic;
+      font-size: clamp(22px, 3.5vw, 44px);
+      font-weight: 400;
+      line-height: 1.4;
+      max-width: 860px;
+      margin: 0 auto 32px;
+      letter-spacing: -0.01em;
+    }
+
+    .quote-section cite {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      font-style: normal;
+    }
+
+    /* ── GALLERY STRIP ── */
+    .gallery-strip {
+      padding: 80px 0;
+      overflow: hidden;
+    }
+
+    .gallery-strip-inner {
+      padding: 0 40px;
+      margin-bottom: 20px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      padding: 0 40px;
+    }
+
+    .gallery-item {
+      aspect-ratio: 3/4;
+      background: var(--light);
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover img { transform: scale(1.04); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--white);
+      border-top: 1px solid rgba(0,0,0,0.1);
+      padding: 80px 40px 48px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: start;
+      margin-bottom: 64px;
+    }
+
+    .footer-newsletter h3 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(22px, 3vw, 38px);
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+
+    .footer-newsletter p {
+      font-size: 15px;
+      color: var(--gray);
+      margin-bottom: 24px;
+    }
+
+    .subscribe-form {
+      display: flex;
+      max-width: 420px;
+    }
+
+    .subscribe-form input {
+      flex: 1;
+      padding: 13px 16px;
+      border: 1.5px solid var(--black);
+      border-right: none;
+      font-family: 'Archivo', sans-serif;
+      font-size: 14px;
+      outline: none;
+      background: var(--white);
+    }
+
+    .subscribe-form input::placeholder { color: #aaa; }
+
+    .subscribe-form button {
+      padding: 13px 24px;
+      background: var(--black);
+      color: var(--white);
+      border: 1.5px solid var(--black);
+      font-family: 'Archivo', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .subscribe-form button:hover { background: #333; }
+
+    .footer-social {
+      text-align: right;
+    }
+
+    .footer-social p {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 16px;
+    }
+
+    .social-links { display: flex; gap: 12px; justify-content: flex-end; }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border: 1.5px solid var(--black);
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      color: var(--black);
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .social-links a:hover { background: var(--black); color: var(--white); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .footer-bottom .footer-logo {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 20px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .footer-bottom nav { gap: 24px; }
+    .footer-bottom nav a {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--gray);
+      transition: color 0.2s;
+    }
+    .footer-bottom nav a:hover { color: var(--black); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--gray);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      header { padding: 16px 24px; }
+      nav { gap: 20px; }
+
+      .hero { padding: 48px 24px; }
+
+      .intro {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 64px 24px;
+      }
+
+      .intro-image { max-height: 400px; }
+
+      section { padding: 64px 24px; }
+
+      .services-grid { grid-template-columns: 1fr; }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0 24px;
+      }
+
+      footer { padding: 64px 24px 40px; }
+
+      .footer-top {
+        grid-template-columns: 1fr;
+      }
+      .footer-social { text-align: left; }
+      .social-links { justify-content: flex-start; }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+      .footer-bottom nav { flex-wrap: wrap; justify-content: center; }
+    }
+
+    @media (max-width: 600px) {
+      nav a:not(:last-child) { display: none; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="header">
+    <a class="logo" href="#">Robert Kask</a>
+    <nav>
+      <a href="#selgus">Selgus</a>
+      <a href="#teraapia">Teraapia</a>
+      <a href="#fotograafia">Fotograafia</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-bg">
+      <!-- Add your photo: background-image: url('photo.jpg') inline or replace this div -->
+    </div>
+    <div class="hero-portrait-placeholder"></div>
+    <div class="hero-content">
+      <p class="section-label" style="color:rgba(255,255,255,0.6);">Fotograaf · Terapeut · Loodusgiid</p>
+      <h1>Sisemine ilu <em>kohtub</em><br>välimise iluga.</h1>
+      <p>Holistilise regressiooniteraapia seansid, selguse rännakud looduses ja visuaalne pildikeel läbi fotograafia.</p>
+      <a class="btn" href="#kontakt">Võta ühendust</a>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>Fotograaf</span>
+      <span>Terapeut</span>
+      <span>Loodusgiid</span>
+      <span>Jutustaja</span>
+      <span>Robert Kask</span>
+      <span>Fotograaf</span>
+      <span>Terapeut</span>
+      <span>Loodusgiid</span>
+      <span>Jutustaja</span>
+      <span>Robert Kask</span>
+      <!-- duplicate for seamless loop -->
+      <span>Fotograaf</span>
+      <span>Terapeut</span>
+      <span>Loodusgiid</span>
+      <span>Jutustaja</span>
+      <span>Robert Kask</span>
+      <span>Fotograaf</span>
+      <span>Terapeut</span>
+      <span>Loodusgiid</span>
+      <span>Jutustaja</span>
+      <span>Robert Kask</span>
+    </div>
+  </div>
+
+  <!-- INTRO / ABOUT -->
+  <section class="intro" id="minust">
+    <div class="intro-text">
+      <p class="section-label">Minust</p>
+      <h2>Olen fotograaf, terapeut ja looduses rändaja — <em>südamelt jutustaja.</em></h2>
+      <p>Minu töö ühendab kolm maailma: holistiline regressiooniteraapia, mis aitab inimestel avastada oma sisemist maailma; looduses toimuvad selguse rännakud, mis ühendavad liikumise ja vaikuse; ning fotograafia, mis jäädvustab selle, mida sõnad ei suuda öelda.</p>
+      <p>Usun, et ilu on kõikjal — nii inimeses kui looduses. Minu missioon on aidata sul seda näha.</p>
+      <a class="btn" href="#kontakt">Võta ühendust</a>
+    </div>
+    <div class="intro-image">
+      <img src="photo.jpg" alt="Robert Kask" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      <div class="intro-image-placeholder">Sinu foto siia</div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section" id="selgus">
+    <div class="services-header">
+      <p class="section-label">Teenused</p>
+      <h2>Mida ma pakun</h2>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-card-num">01</div>
+        <h3>Selgus</h3>
+        <p>Selguse ränak looduses on juhendatud kohtumine loodusega, kus on ühendatud vaikne liikumine ja sisemine vaatlus. Leiad enda juurde tee tagasi.</p>
+        <a class="btn" href="#kontakt">Loe lähemalt</a>
+      </div>
+
+      <div class="service-card" id="teraapia">
+        <div class="service-card-num">02</div>
+        <h3>Teraapia</h3>
+        <p>Holistiline regressiooniteraapia on sügavam protsess, mis aitab mõista korduvaid mustreid ja vabastada sisemisi pingeid. Tee muutustele avatuks.</p>
+        <a class="btn" href="#kontakt">Loe lähemalt</a>
+      </div>
+
+      <div class="service-card" id="fotograafia">
+        <div class="service-card-num">03</div>
+        <h3>Fotograafia</h3>
+        <p>Lisaks tööle inimestega tegelen fotograafiaga. Portree- ja looduspildid, mis peegeldavad sügavust ja tõde — hetki, mis jäävad.</p>
+        <a class="btn" href="#kontakt">Vaata lähemalt</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <div class="quote-section">
+    <blockquote>
+      "Ilu ei ole see, mida sa näed — see on see, mida sa tunned, kui oled piisavalt vaikseks jäänud, et kuulata."
+    </blockquote>
+    <cite>— Robert Kask</cite>
+  </div>
+
+  <!-- GALLERY -->
+  <section class="gallery-strip" id="galerii">
+    <div class="gallery-strip-inner">
+      <p class="section-label">Fotograafia</p>
+      <h2 style="font-family:'Archivo Black',sans-serif; font-size:clamp(28px,4vw,52px); letter-spacing:-0.02em; margin-bottom:40px;">Visuaalne maailm</h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item" style="background:#d4cfc9;"></div>
+      <div class="gallery-item" style="background:#c9cdd4;"></div>
+      <div class="gallery-item" style="background:#cfd4ce;"></div>
+      <div class="gallery-item" style="background:#d4d0c9;"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="kontakt">
+    <div class="footer-top">
+      <div class="footer-newsletter">
+        <h3>Püsi kursil</h3>
+        <p>Liitu uudiskirjaga ja saad teada esimesena uutest töötubadest, seanssidest ja fotodest.</p>
+        <form class="subscribe-form" onsubmit="return false;">
+          <input type="email" placeholder="E-posti aadress" />
+          <button type="submit">Liitu</button>
+        </form>
+      </div>
+      <div class="footer-social">
+        <p>Jälgi</p>
+        <div class="social-links">
+          <a href="#" title="Instagram">In</a>
+          <a href="#" title="LinkedIn">Li</a>
+          <a href="#" title="Facebook">Fb</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-logo">robert kask.</div>
+      <nav>
+        <a href="#selgus">Selgus</a>
+        <a href="#teraapia">Teraapia</a>
+        <a href="#fotograafia">Fotograafia</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+      <div class="footer-copy">&copy; 2026 Robert Kask</div>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky header color switch on scroll
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 60);
+    });
+  </script>
+
+</body>
+</html>
