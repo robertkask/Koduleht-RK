@@ -14,7 +14,8 @@
       --black: #0a0a0a;
       --white: #ffffff;
       --gray: #888;
-      --light: #f5f4f2;
+      --light: #f0eeeb;
+      --hero-bg: #f8f7f5;
     }
 
     html { scroll-behavior: smooth; }
@@ -28,172 +29,180 @@
       overflow-x: hidden;
     }
 
-    /* ── NAV ── */
+    /* ── HEADER ── */
     header {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      z-index: 200;
+      z-index: 400;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 20px 40px;
-      mix-blend-mode: normal;
-    }
-
-    header.scrolled {
-      background: rgba(255,255,255,0.96);
-      backdrop-filter: blur(8px);
+      background: #fff;
       border-bottom: 1px solid rgba(0,0,0,0.08);
     }
 
     .logo {
       font-family: 'Archivo Black', sans-serif;
-      font-size: 18px;
+      font-size: 24px;
       letter-spacing: 0.04em;
       text-transform: uppercase;
       text-decoration: none;
-      color: var(--white);
-      transition: color 0.3s;
+      color: var(--black);
+      z-index: 310;
+      position: relative;
     }
 
-    header.scrolled .logo { color: var(--black); }
+    /* ── DESKTOP NAV ── */
+    .desktop-nav {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
 
-    nav { display: flex; gap: 32px; align-items: center; }
-
-    nav a {
+    .desktop-nav a {
       font-size: 13px;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       text-decoration: none;
-      color: var(--white);
-      transition: opacity 0.2s, color 0.3s;
+      color: var(--black);
+      transition: opacity 0.2s;
     }
 
-    header.scrolled nav a { color: var(--black); }
-    nav a:hover { opacity: 0.5; }
+    .desktop-nav a:hover { opacity: 0.45; }
+
+    /* ── HAMBURGER BUTTON ── */
+    .burger-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 7px;
+      width: 44px;
+      height: 44px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+      z-index: 400;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .burger-btn span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background: #000000;
+      border-radius: 0;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    /* X animation when open */
+    .burger-btn.open span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+    .burger-btn.open span:nth-child(2) { opacity: 0; }
+    .burger-btn.open span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+
+    /* ── MOBILE MENU OVERLAY ── */
+    .mobile-menu {
+      display: flex;
+      position: fixed;
+      inset: 0;
+      background: var(--white);
+      z-index: 350;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 36px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .mobile-menu a {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(32px, 8vw, 56px);
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      transition: opacity 0.2s;
+    }
+
+    .mobile-menu a:hover { opacity: 0.4; }
 
     /* ── HERO ── */
     .hero {
-      position: relative;
-      height: 100vh;
-      min-height: 600px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 64px 40px;
-      overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background: #1a1a1a;
-      /* Replace with: background-image: url('photo.jpg'); */
-      background-size: cover;
-      background-position: center top;
-    }
-
-    .hero-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.05) 0%,
-        rgba(0,0,0,0.1) 40%,
-        rgba(0,0,0,0.65) 100%
-      );
-    }
-
-    /* placeholder portrait box when no photo */
-    .hero-portrait-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
+      background: var(--hero-bg);
+      padding: 110px 40px 100px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
       align-items: center;
-      justify-content: flex-end;
-      padding-right: 8vw;
-      z-index: 0;
+      min-height: 90vh;
     }
 
-    .hero-portrait-placeholder::after {
-      content: '';
-      display: block;
-      width: 340px;
-      height: 440px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.06);
-      border: 1px dashed rgba(255,255,255,0.2);
-    }
+    .hero-text .section-label { color: var(--gray); margin-bottom: 24px; }
 
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 720px;
-    }
-
-    .hero-content h1 {
+    .hero-text h1 {
       font-family: 'Archivo Black', sans-serif;
-      font-size: clamp(38px, 6vw, 80px);
+      font-size: clamp(36px, 5.5vw, 76px);
       line-height: 1.0;
       letter-spacing: -0.02em;
-      color: var(--white);
+      color: var(--black);
       margin-bottom: 24px;
     }
 
-    .hero-content h1 em {
+    .hero-text h1 em {
       font-family: 'Archivo', sans-serif;
       font-style: italic;
       font-weight: 400;
     }
 
-    .hero-content p {
-      font-size: clamp(15px, 1.5vw, 18px);
-      color: rgba(255,255,255,0.82);
-      max-width: 520px;
+    .hero-text p {
+      font-size: clamp(15px, 1.4vw, 18px);
+      color: #555;
+      max-width: 480px;
       line-height: 1.7;
-      margin-bottom: 36px;
+      margin-bottom: 40px;
     }
 
-    .hero-content .btn { border-color: rgba(255,255,255,0.8); color: var(--white); }
-    .hero-content .btn:hover { background: var(--white); color: var(--black); }
-
-    /* ── MARQUEE ── */
-    .marquee-wrap {
-      overflow: hidden;
-      border-top: 1px solid var(--black);
-      border-bottom: 1px solid var(--black);
-      padding: 18px 0;
-      background: var(--white);
-    }
-
-    .marquee-track {
+    .hero-image {
       display: flex;
-      width: max-content;
-      animation: marquee 20s linear infinite;
+      justify-content: center;
     }
 
-    .marquee-track span {
-      font-family: 'Archivo Black', sans-serif;
-      font-size: 15px;
-      letter-spacing: 0.18em;
+    .hero-image-inner {
+      width: 100%;
+      max-width: 440px;
+      aspect-ratio: 4/5;
+      background: #d6d2cb;
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-image-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-image-placeholder {
+      font-size: 12px;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      padding: 0 48px;
-      white-space: nowrap;
-    }
-
-    .marquee-track span::after {
-      content: '·';
-      margin-left: 48px;
-      color: var(--gray);
-    }
-
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
+      color: #aaa;
     }
 
     /* ── SHARED ── */
@@ -210,13 +219,12 @@
       color: var(--black);
       background: transparent;
       cursor: pointer;
-      transition: background 0.25s, color 0.25s, border-color 0.25s;
+      transition: background 0.25s, color 0.25s;
     }
     .btn:hover { background: var(--black); color: var(--white); }
 
-    section { padding: 100px 40px; }
-
     .section-label {
+      display: block;
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.22em;
@@ -225,61 +233,35 @@
       margin-bottom: 20px;
     }
 
-    /* ── ABOUT / INTRO ── */
+    /* ── INTRO / ABOUT ── */
     .intro {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
       padding: 100px 40px;
+      max-width: 760px;
+      margin: 0 auto;
     }
 
-    .intro-text h2 {
+    .intro h2 {
       font-family: 'Archivo Black', sans-serif;
-      font-size: clamp(28px, 3.5vw, 48px);
+      font-size: clamp(26px, 3.2vw, 46px);
       line-height: 1.1;
       letter-spacing: -0.02em;
       margin-bottom: 28px;
     }
 
-    .intro-text p {
+    .intro p {
       font-size: 17px;
       color: #444;
       line-height: 1.75;
       margin-bottom: 20px;
     }
 
-    .intro-text .btn { margin-top: 16px; }
+    .intro .btn { margin-top: 16px; }
 
-    .intro-image {
-      aspect-ratio: 4/5;
+    /* ── SERVICES ── */
+    .services-section {
       background: var(--light);
-      border-radius: 4px;
-      overflow: hidden;
-      position: relative;
+      padding: 100px 40px;
     }
-
-    .intro-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .intro-image-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #bbb;
-      font-size: 13px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    /* ── SERVICES GRID ── */
-    .services-section { background: var(--light); }
 
     .services-header {
       text-align: center;
@@ -302,12 +284,15 @@
     .service-card {
       background: var(--white);
       padding: 56px 40px;
-      transition: background 0.3s;
+      transition: background 0.3s, color 0.3s;
+      display: flex;
+      flex-direction: column;
     }
 
     .service-card:hover { background: var(--black); color: var(--white); }
     .service-card:hover .service-card-num,
-    .service-card:hover p { color: rgba(255,255,255,0.6); }
+    .service-card:hover p { color: rgba(255,255,255,0.55); }
+    .service-card .btn { text-align: center; width: 100%; }
     .service-card:hover .btn { border-color: var(--white); color: var(--white); }
     .service-card:hover .btn:hover { background: var(--white); color: var(--black); }
 
@@ -332,6 +317,7 @@
       color: #555;
       line-height: 1.7;
       margin-bottom: 36px;
+      flex: 1;
     }
 
     /* ── QUOTE ── */
@@ -362,15 +348,16 @@
       font-style: normal;
     }
 
-    /* ── GALLERY STRIP ── */
-    .gallery-strip {
-      padding: 80px 0;
-      overflow: hidden;
-    }
+    /* ── GALLERY ── */
+    .gallery-strip { padding: 80px 0; }
 
-    .gallery-strip-inner {
-      padding: 0 40px;
-      margin-bottom: 20px;
+    .gallery-strip-inner { padding: 0 40px; margin-bottom: 40px; }
+
+    .gallery-strip-inner h2 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(28px, 4vw, 52px);
+      letter-spacing: -0.02em;
+      margin-top: 8px;
     }
 
     .gallery-grid {
@@ -388,10 +375,8 @@
     }
 
     .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
       transition: transform 0.5s ease;
     }
 
@@ -459,10 +444,6 @@
 
     .subscribe-form button:hover { background: #333; }
 
-    .footer-social {
-      text-align: right;
-    }
-
     .footer-social p {
       font-size: 11px;
       font-weight: 700;
@@ -470,6 +451,7 @@
       text-transform: uppercase;
       color: var(--gray);
       margin-bottom: 16px;
+      text-align: right;
     }
 
     .social-links { display: flex; gap: 12px; justify-content: flex-end; }
@@ -484,7 +466,6 @@
       border-radius: 50%;
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.05em;
       text-decoration: none;
       color: var(--black);
       text-transform: uppercase;
@@ -501,14 +482,14 @@
       border-top: 1px solid rgba(0,0,0,0.1);
     }
 
-    .footer-bottom .footer-logo {
+    .footer-logo {
       font-family: 'Archivo Black', sans-serif;
       font-size: 20px;
       letter-spacing: 0.02em;
       text-transform: uppercase;
     }
 
-    .footer-bottom nav { gap: 24px; }
+    .footer-bottom nav { display: flex; gap: 24px; }
     .footer-bottom nav a {
       font-size: 12px;
       font-weight: 700;
@@ -520,54 +501,64 @@
     }
     .footer-bottom nav a:hover { color: var(--black); }
 
-    .footer-copy {
-      font-size: 12px;
-      color: var(--gray);
-    }
+    .footer-copy { font-size: 12px; color: var(--gray); }
 
     /* ── RESPONSIVE ── */
+
+    /* Tablet: hide desktop nav, show burger */
     @media (max-width: 900px) {
+      .desktop-nav { display: none; }
+      .burger-btn { display: flex; }
+
       header { padding: 16px 24px; }
-      nav { gap: 20px; }
 
-      .hero { padding: 48px 24px; }
-
-      .intro {
+      /* Hero */
+      .hero {
         grid-template-columns: 1fr;
+        padding: 120px 24px 72px;
+        min-height: auto;
         gap: 40px;
-        padding: 64px 24px;
       }
 
-      .intro-image { max-height: 400px; }
+      .hero-image { order: -1; }
+      .hero-image-inner { max-width: 320px; }
+      .hero-text h1 { font-size: clamp(36px, 8vw, 58px); }
 
-      section { padding: 64px 24px; }
+      /* Intro */
+      .intro { padding: 72px 24px; }
 
+      /* Services */
+      .services-section { padding: 72px 24px; }
       .services-grid { grid-template-columns: 1fr; }
 
-      .gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 0 24px;
-      }
+      /* Gallery */
+      .gallery-strip-inner { padding: 0 24px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); padding: 0 24px; }
 
+      /* Footer */
       footer { padding: 64px 24px 40px; }
-
-      .footer-top {
-        grid-template-columns: 1fr;
-      }
-      .footer-social { text-align: left; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-social p { text-align: left; }
       .social-links { justify-content: flex-start; }
-
+      .subscribe-form { max-width: 100%; }
       .footer-bottom {
         flex-direction: column;
-        gap: 16px;
+        gap: 20px;
         text-align: center;
       }
       .footer-bottom nav { flex-wrap: wrap; justify-content: center; }
     }
 
-    @media (max-width: 600px) {
-      nav a:not(:last-child) { display: none; }
-      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 4px; }
+    /* Mobile */
+    @media (max-width: 480px) {
+      .hero { padding: 100px 20px 60px; }
+      .hero-image-inner { max-width: 100%; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 4px; padding: 0 20px; }
+      .services-section { padding: 60px 20px; }
+      .intro { padding: 60px 20px; }
+      .quote-section { padding: 80px 20px; }
+      footer { padding: 48px 20px 32px; }
+      .gallery-strip-inner { padding: 0 20px; }
     }
   </style>
 </head>
@@ -576,74 +567,59 @@
   <!-- HEADER -->
   <header id="header">
     <a class="logo" href="#">Robert Kask</a>
-    <nav>
+
+    <!-- Desktop nav -->
+    <nav class="desktop-nav">
       <a href="#selgus">Selgus</a>
       <a href="#teraapia">Teraapia</a>
       <a href="#fotograafia">Fotograafia</a>
       <a href="#kontakt">Kontakt</a>
     </nav>
+
+    <!-- Hamburger button -->
+    <button class="burger-btn" id="burgerBtn" aria-label="Menüü">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </header>
+
+  <!-- Mobile menu overlay -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#selgus"      onclick="closeMenu()">Selgus</a>
+    <a href="#teraapia"    onclick="closeMenu()">Teraapia</a>
+    <a href="#fotograafia" onclick="closeMenu()">Fotograafia</a>
+    <a href="#kontakt"     onclick="closeMenu()">Kontakt</a>
+  </div>
 
   <!-- HERO -->
   <section class="hero" id="top">
-    <div class="hero-bg">
-      <!-- Add your photo: background-image: url('photo.jpg') inline or replace this div -->
-    </div>
-    <div class="hero-portrait-placeholder"></div>
-    <div class="hero-content">
-      <p class="section-label" style="color:rgba(255,255,255,0.6);">Fotograaf · Terapeut · Loodusgiid</p>
+    <div class="hero-text">
+      <span class="section-label">Terapeut · Fotograaf</span>
       <h1>Sisemine ilu <em>kohtub</em><br>välimise iluga.</h1>
       <p>Holistilise regressiooniteraapia seansid, selguse rännakud looduses ja visuaalne pildikeel läbi fotograafia.</p>
       <a class="btn" href="#kontakt">Võta ühendust</a>
     </div>
-  </section>
-
-  <!-- MARQUEE -->
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      <span>Fotograaf</span>
-      <span>Terapeut</span>
-      <span>Loodusgiid</span>
-      <span>Jutustaja</span>
-      <span>Robert Kask</span>
-      <span>Fotograaf</span>
-      <span>Terapeut</span>
-      <span>Loodusgiid</span>
-      <span>Jutustaja</span>
-      <span>Robert Kask</span>
-      <!-- duplicate for seamless loop -->
-      <span>Fotograaf</span>
-      <span>Terapeut</span>
-      <span>Loodusgiid</span>
-      <span>Jutustaja</span>
-      <span>Robert Kask</span>
-      <span>Fotograaf</span>
-      <span>Terapeut</span>
-      <span>Loodusgiid</span>
-      <span>Jutustaja</span>
-      <span>Robert Kask</span>
+    <div class="hero-image">
+      <div class="hero-image-inner">
+        <img src="P8192470.jpg" alt="Robert Kask" />
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- INTRO / ABOUT -->
   <section class="intro" id="minust">
-    <div class="intro-text">
-      <p class="section-label">Minust</p>
-      <h2>Olen fotograaf, terapeut ja looduses rändaja — <em>südamelt jutustaja.</em></h2>
-      <p>Minu töö ühendab kolm maailma: holistiline regressiooniteraapia, mis aitab inimestel avastada oma sisemist maailma; looduses toimuvad selguse rännakud, mis ühendavad liikumise ja vaikuse; ning fotograafia, mis jäädvustab selle, mida sõnad ei suuda öelda.</p>
-      <p>Usun, et ilu on kõikjal — nii inimeses kui looduses. Minu missioon on aidata sul seda näha.</p>
-      <a class="btn" href="#kontakt">Võta ühendust</a>
-    </div>
-    <div class="intro-image">
-      <img src="photo.jpg" alt="Robert Kask" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-      <div class="intro-image-placeholder">Sinu foto siia</div>
-    </div>
+    <span class="section-label">Minust</span>
+    <h2>Olen terapeut, fotograaf ja looduses rändaja — <em>hingelt otsija.</em></h2>
+    <p>Minu töö ühendab kolm maailma: holistiline regressiooniteraapia, mis aitab inimestel avastada oma sisemist maailma; looduses toimuvad selguse rännakud, mis ühendavad liikumise, vaikuse ja rahu; ning fotograafia, mis jäädvustab selle, mida sõnad ei suuda kirjeldada.</p>
+    <p>Usun, et ilu on kõikjal — nii inimeses kui looduses. Minu missioon on aidata sul seda näha.</p>
+    <a class="btn" href="#kontakt">Võta ühendust</a>
   </section>
 
   <!-- SERVICES -->
   <section class="services-section" id="selgus">
     <div class="services-header">
-      <p class="section-label">Teenused</p>
+      <span class="section-label">Teenused</span>
       <h2>Mida ma pakun</h2>
     </div>
     <div class="services-grid">
@@ -651,21 +627,21 @@
       <div class="service-card">
         <div class="service-card-num">01</div>
         <h3>Selgus</h3>
-        <p>Selguse ränak looduses on juhendatud kohtumine loodusega, kus on ühendatud vaikne liikumine ja sisemine vaatlus. Leiad enda juurde tee tagasi.</p>
+        <p>Selguse ränak looduses on juhendatud kohtumine looduses, kus on ühendatud vaikne liikumine ja vestlus.</p>
         <a class="btn" href="#kontakt">Loe lähemalt</a>
       </div>
 
       <div class="service-card" id="teraapia">
         <div class="service-card-num">02</div>
         <h3>Teraapia</h3>
-        <p>Holistiline regressiooniteraapia on sügavam protsess, mis aitab mõista korduvaid mustreid ja vabastada sisemisi pingeid. Tee muutustele avatuks.</p>
+        <p>Holistiline regressiooniteraapia on sügavam protsess, mis aitab mõista korduvaid mustreid ja vabastada sisemisi pingeid.</p>
         <a class="btn" href="#kontakt">Loe lähemalt</a>
       </div>
 
       <div class="service-card" id="fotograafia">
         <div class="service-card-num">03</div>
         <h3>Fotograafia</h3>
-        <p>Lisaks tööle inimestega tegelen fotograafiaga. Portree- ja looduspildid, mis peegeldavad sügavust ja tõde — hetki, mis jäävad.</p>
+        <p>Lisaks tööle inimestega tegelen fotograafiaga. Fotograafia on viis maailma aeglasemalt vaadata.</p>
         <a class="btn" href="#kontakt">Vaata lähemalt</a>
       </div>
 
@@ -675,7 +651,7 @@
   <!-- QUOTE -->
   <div class="quote-section">
     <blockquote>
-      "Ilu ei ole see, mida sa näed — see on see, mida sa tunned, kui oled piisavalt vaikseks jäänud, et kuulata."
+      "Ilu ei ole see, mida sa näed — see on see, mida sa koged, kui oled piisavalt vaikseks jäänud, et märgata."
     </blockquote>
     <cite>— Robert Kask</cite>
   </div>
@@ -683,8 +659,8 @@
   <!-- GALLERY -->
   <section class="gallery-strip" id="galerii">
     <div class="gallery-strip-inner">
-      <p class="section-label">Fotograafia</p>
-      <h2 style="font-family:'Archivo Black',sans-serif; font-size:clamp(28px,4vw,52px); letter-spacing:-0.02em; margin-bottom:40px;">Visuaalne maailm</h2>
+      <span class="section-label">Fotograafia</span>
+      <h2>Visuaalne maailm</h2>
     </div>
     <div class="gallery-grid">
       <div class="gallery-item" style="background:#d4cfc9;"></div>
@@ -698,7 +674,7 @@
   <footer id="kontakt">
     <div class="footer-top">
       <div class="footer-newsletter">
-        <h3>Püsi kursil</h3>
+        <h3>Püsi kursis</h3>
         <p>Liitu uudiskirjaga ja saad teada esimesena uutest töötubadest, seanssidest ja fotodest.</p>
         <form class="subscribe-form" onsubmit="return false;">
           <input type="email" placeholder="E-posti aadress" />
@@ -716,7 +692,7 @@
     </div>
 
     <div class="footer-bottom">
-      <div class="footer-logo">robert kask.</div>
+      <div class="footer-logo">Robert Kask</div>
       <nav>
         <a href="#selgus">Selgus</a>
         <a href="#teraapia">Teraapia</a>
@@ -728,11 +704,28 @@
   </footer>
 
   <script>
-    // Sticky header color switch on scroll
-    const header = document.getElementById('header');
+    const header    = document.getElementById('header');
+    const burgerBtn = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    // Scroll: add .scrolled class
     window.addEventListener('scroll', () => {
       header.classList.toggle('scrolled', window.scrollY > 60);
     });
+
+    // Hamburger toggle
+    burgerBtn.addEventListener('click', () => {
+      const isOpen = burgerBtn.classList.toggle('open');
+      mobileMenu.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    // Close menu when a link is clicked
+    function closeMenu() {
+      burgerBtn.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    }
   </script>
 
 </body>
