@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Selgus — Robert Kask</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Archivo+Black&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --gray: #888;
+      --light: #f0eeeb;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Archivo', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 400;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      background: #fff;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 24px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      z-index: 410;
+      position: relative;
+    }
+
+    .desktop-nav { display: flex; gap: 32px; align-items: center; }
+
+    .desktop-nav a {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      transition: opacity 0.2s;
+    }
+
+    .desktop-nav a:hover { opacity: 0.45; }
+    .desktop-nav a.active { border-bottom: 2px solid var(--black); padding-bottom: 2px; }
+
+    /* ── HAMBURGER ── */
+    .burger-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 7px;
+      width: 44px; height: 44px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+      z-index: 410;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .burger-btn span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background: #000;
+      border-radius: 0;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .burger-btn.open span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+    .burger-btn.open span:nth-child(2) { opacity: 0; }
+    .burger-btn.open span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: flex;
+      position: fixed;
+      inset: 0;
+      background: var(--white);
+      z-index: 350;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 36px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .mobile-menu.open { opacity: 1; pointer-events: all; }
+
+    .mobile-menu a {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(32px, 8vw, 56px);
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      transition: opacity 0.2s;
+    }
+
+    .mobile-menu a:hover { opacity: 0.4; }
+
+    /* ── SHARED ── */
+    .btn {
+      display: inline-block;
+      padding: 13px 30px;
+      border: 1.5px solid var(--black);
+      font-family: 'Archivo', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s;
+    }
+    .btn:hover { background: var(--black); color: var(--white); }
+
+    .btn-white {
+      border-color: rgba(255,255,255,0.8);
+      color: var(--white);
+    }
+    .btn-white:hover { background: var(--white); color: var(--black); }
+
+    .section-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 20px;
+    }
+
+    /* ── HERO — full-bleed photo ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+    }
+
+    /* Gradient: dark at bottom for text legibility, light/clear at top */
+    .hero-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.0) 0%,
+        rgba(0,0,0,0.08) 50%,
+        rgba(0,0,0,0.72) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 64px 40px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 40px;
+    }
+
+    .hero-title h1 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(64px, 12vw, 160px);
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+
+    .hero-desc {
+      max-width: 340px;
+      text-align: right;
+    }
+
+    .hero-desc p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.65;
+      margin-bottom: 28px;
+      font-style: italic;
+    }
+
+    /* ── INTRO ── */
+    .intro {
+      padding: 100px 40px;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      align-items: start;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .intro-left h2 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(28px, 3vw, 42px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .intro-right p {
+      font-size: 18px;
+      color: #333;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .intro-right p:last-child { margin-bottom: 0; }
+
+    /* ── SPLIT PHOTO + QUOTE ── */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 560px;
+    }
+
+    .split-photo {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .split-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 30% center;
+      display: block;
+      transition: transform 6s ease;
+    }
+
+    .split-photo:hover img { transform: scale(1.04); }
+
+    .split-text {
+      background: var(--black);
+      color: var(--white);
+      padding: 80px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .split-text .section-label { color: rgba(255,255,255,0.45); margin-bottom: 32px; }
+
+    .split-text blockquote {
+      font-family: 'Archivo', sans-serif;
+      font-style: italic;
+      font-size: clamp(20px, 2.2vw, 30px);
+      line-height: 1.5;
+      font-weight: 400;
+      margin-bottom: 40px;
+      letter-spacing: -0.01em;
+    }
+
+    .split-text cite {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      font-style: normal;
+    }
+
+    /* ── OVERVIEW (combined) ── */
+    .overview {
+      padding: 100px 40px;
+      background: var(--light);
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .overview-left h3,
+    .overview-right h3 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+    }
+
+    .overview-list {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+
+    .overview-list li {
+      font-size: 16px;
+      color: var(--black);
+      line-height: 1.7;
+      padding-left: 18px;
+      position: relative;
+      margin-bottom: 4px;
+    }
+
+    .overview-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+    }
+
+    .overview-left p {
+      font-size: 16px;
+      color: var(--black);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .overview-right .btn {
+      margin-top: 32px;
+    }
+
+    .info-list {
+      list-style: none;
+      margin-bottom: 40px;
+    }
+
+    .info-list li {
+      display: flex;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      font-size: 15px;
+      align-items: baseline;
+    }
+
+    .info-list li:first-child { border-top: 1px solid rgba(0,0,0,0.08); }
+
+    .info-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray);
+      min-width: 130px;
+      flex-shrink: 0;
+    }
+
+
+    /* ── CTA ── */
+    .cta {
+      background: var(--black);
+      color: var(--white);
+      padding: 120px 40px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(32px, 5vw, 64px);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+
+    .cta p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.65);
+      max-width: 480px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--white);
+      border-top: 1px solid rgba(0,0,0,0.1);
+      padding: 80px 40px 48px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: start;
+      margin-bottom: 64px;
+    }
+
+    .footer-newsletter h3 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(22px, 3vw, 38px);
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+
+    .footer-newsletter p {
+      font-size: 15px;
+      color: var(--gray);
+      margin-bottom: 24px;
+    }
+
+    .subscribe-form { display: flex; max-width: 420px; }
+
+    .subscribe-form input {
+      flex: 1;
+      padding: 13px 16px;
+      border: 1.5px solid var(--black);
+      border-right: none;
+      font-family: 'Archivo', sans-serif;
+      font-size: 14px;
+      outline: none;
+      background: var(--white);
+    }
+
+    .subscribe-form input::placeholder { color: #aaa; }
+
+    .subscribe-form button {
+      padding: 13px 24px;
+      background: var(--black);
+      color: var(--white);
+      border: 1.5px solid var(--black);
+      font-family: 'Archivo', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .subscribe-form button:hover { background: #333; }
+
+    .footer-social p {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 16px;
+      text-align: right;
+    }
+
+    .social-links { display: flex; gap: 12px; justify-content: flex-end; }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px; height: 44px;
+      border: 1.5px solid var(--black);
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--black);
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .social-links a:hover { background: var(--black); color: var(--white); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .footer-logo {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 20px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .footer-bottom nav { display: flex; gap: 24px; }
+    .footer-bottom nav a {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--gray);
+      transition: color 0.2s;
+    }
+    .footer-bottom nav a:hover { color: var(--black); }
+
+    .footer-copy { font-size: 12px; color: var(--gray); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .desktop-nav { display: none; }
+      .burger-btn { display: flex; }
+
+      header { padding: 16px 24px; }
+
+      .hero-content {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 48px 24px;
+        gap: 24px;
+      }
+
+      .hero-desc { text-align: left; max-width: 100%; }
+
+      .intro {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 72px 24px;
+      }
+
+      .split { grid-template-columns: 1fr; }
+      .split-photo { min-height: 360px; }
+      .split-text { padding: 56px 24px; }
+
+      .overview { padding: 72px 24px; }
+      .overview-grid { grid-template-columns: 1fr; gap: 48px; }
+
+      .cta { padding: 80px 24px; }
+
+      footer { padding: 64px 24px 40px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-social p { text-align: left; }
+      .social-links { justify-content: flex-start; }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+      .footer-bottom nav { flex-wrap: wrap; justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title h1 { font-size: clamp(52px, 18vw, 90px); }
+      .how { padding: 60px 20px; }
+      .practical { padding: 60px 20px; }
+      .cta { padding: 72px 20px; }
+      footer { padding: 48px 20px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a class="logo" href="index.html">Robert Kask</a>
+    <nav class="desktop-nav">
+      <a href="selgus.html" class="active">Selgus</a>
+      <a href="teraapia.html">Teraapia</a>
+      <a href="fotograafia.html">Fotograafia</a>
+      <a href="index.html#kontakt">Kontakt</a>
+    </nav>
+    <button class="burger-btn" id="burgerBtn" aria-label="Menüü">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="selgus.html"      onclick="closeMenu()">Selgus</a>
+    <a href="teraapia.html"    onclick="closeMenu()">Teraapia</a>
+    <a href="fotograafia.html" onclick="closeMenu()">Fotograafia</a>
+    <a href="index.html#kontakt" onclick="closeMenu()">Kontakt</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-photo">
+      <img src="DSC02595-HDR-FB.jpg" alt="Raba hommik — selguse ränak looduses" />
+    </div>
+    <div class="hero-content">
+      <div class="hero-title">
+        <h1>Selgus</h1>
+      </div>
+      <div class="hero-desc">
+        <p>Kohtumine looduses, kus liikumine, vaikus ja vestlus avavad tee sisemise selguseni.</p>
+        <a class="btn btn-white" href="index.html#kontakt">Võta ühendust</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="intro">
+    <div class="intro-left">
+      <span class="section-label">Mis see on</span>
+      <h2>Rännak, mis avab rohkem kui lihtsalt matk.</h2>
+    </div>
+    <div class="intro-right">
+      <p>Selguse rännak looduses on individuaalne kohtumine, mis ühendab liikumise ja vestluse ning kus looduskeskkond on aktiivne osa protsessist. Liikumine aitab mõtetel liikuma hakata, avarus loob perspektiivi ja vaikus toob esile selle, mis igapäevaelus sageli tahaplaanile jääb.</p>
+      <p>Alustame rahuliku liikumisega looduses — ilma kiirustamata ja sageli ka vaikuses. Selles tempos tekib ruum, kus saavad esile tulla küsimused — need, mida sa kaasa tõid, või need, mis kujunevad rännaku käigus.</p>
+      <p>Seejärel peatume ning vestleme. Vestlus kujuneb vastavalt sellele, mis sinu jaoks hetkes oluline on — mõni konkreetne küsimus või soov paremini aru saada, mis sinu sees toimub.</p>
+      <p>Kohtumise käigus kasutan vajadusel holistilise teraapia ja vestlustehnikate elemente, et toetada sind selguse leidmisel. Fookus on sellel, et sul tekiks võimalus iseennast kuulata ja vastusteni jõuda.</p>
+    </div>
+  </section>
+
+  <!-- SPLIT: PHOTO + QUOTE -->
+  <div class="split">
+    <div class="split-photo">
+      <img src="DSC02335-HDR-FB.jpg" alt="Raba järv hommikuses udus" />
+    </div>
+    <div class="split-text">
+      <span class="section-label">Miks loodus</span>
+      <blockquote>
+        "Loodus ei lahenda su probleeme. Ta lihtsalt vaigistab müra — ja just siis tekib ruum, kus mõtted hakkavad selginema."
+      </blockquote>
+      <cite>— Robert Kask</cite>
+    </div>
+  </div>
+
+  <!-- MIS SIND OOTAB -->
+  <section class="overview">
+    <div class="overview-grid">
+
+      <!-- LEFT: who it's for + experience -->
+      <div class="overview-left">
+        <h3>See sobib sulle, kui:</h3>
+        <ul class="overview-list">
+          <li>tunned, et vajad pausi ja selgust</li>
+          <li>soovid rääkida, kuid mitte klassikalises kabinetikeskkonnas</li>
+          <li>otsid rahulikku ja turvalist ruumi, kus olla iseendaga</li>
+        </ul>
+        <p>Iga rännak on erinev. Mõni lahkub selgemate mõtetega, teine lihtsalt kergema hingega. Mõnikord ei tule vastused kohe sõnadesse — aga midagi liigub paika.</p>
+      </div>
+
+      <!-- RIGHT: practical info -->
+      <div class="overview-right">
+        <h3>Praktiline info</h3>
+        <ul class="info-list">
+          <li>
+            <span class="info-label">Asukoht</span>
+            <span>Looduslik keskkond (raba, mets, jõeäär) tunniajase autosõidu kaugusel Tallinnast. Mujal Eestis kokkuleppel.</span>
+          </li>
+          <li>
+            <span class="info-label">Kestus</span>
+            <span>2–3 tundi, olenevalt tempost ja teemast. Lisandub sõiduaeg asukohta ja tagasi.</span>
+          </li>
+          <li>
+            <span class="info-label">Keel</span>
+            <span>Eesti keel, inglise keel</span>
+          </li>
+          <li>
+            <span class="info-label">Riietus</span>
+            <span>Ilmastikule vastav, mugav liikumiseks</span>
+          </li>
+          <li>
+            <span class="info-label">Hind</span>
+            <span>300 EUR</span>
+          </li>
+          <li>
+            <span class="info-label">Broneerimine</span>
+            <span>Kirja teel või telefoni teel. Vähemalt 48 tundi ette.</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Tule minuga loodusesse</h2>
+    <p>Broneeri oma selguse ränak ja lähme loodusesse —<br>koos otsima seda, mis sul juba olemas on.</p>
+    <a class="btn btn-white" href="index.html#kontakt">Võta ühendust</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-newsletter">
+        <h3>Püsi kursis</h3>
+        <p>Liitu uudiskirjaga ja saad teada esimesena uutest töötubadest, seanssidest ja fotodest.</p>
+        <form class="subscribe-form" onsubmit="return false;">
+          <input type="email" placeholder="E-posti aadress" />
+          <button type="submit">Liitu</button>
+        </form>
+      </div>
+      <div class="footer-social">
+        <p>Jälgi</p>
+        <div class="social-links">
+          <a href="#" title="Instagram">In</a>
+          <a href="#" title="LinkedIn">Li</a>
+          <a href="#" title="Facebook">Fb</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-logo">Robert Kask</div>
+      <nav>
+        <a href="selgus.html">Selgus</a>
+        <a href="teraapia.html">Teraapia</a>
+        <a href="fotograafia.html">Fotograafia</a>
+        <a href="index.html#kontakt">Kontakt</a>
+      </nav>
+      <div class="footer-copy">&copy; 2026 Robert Kask</div>
+    </div>
+  </footer>
+
+  <script>
+    const burgerBtn  = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    burgerBtn.addEventListener('click', () => {
+      const isOpen = burgerBtn.classList.toggle('open');
+      mobileMenu.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    function closeMenu() {
+      burgerBtn.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  </script>
+
+</body>
+</html>
