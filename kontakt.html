@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Minust — Robert Kask</title>
+  <title>Kontakt — Robert Kask</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Archivo+Black&display=swap" rel="stylesheet" />
@@ -143,12 +143,6 @@
     }
     .btn:hover { background: var(--black); color: var(--white); }
 
-    .btn-white {
-      border-color: rgba(255,255,255,0.8);
-      color: var(--white);
-    }
-    .btn-white:hover { background: var(--white); color: var(--black); }
-
     .section-label {
       display: block;
       font-size: 11px;
@@ -159,173 +153,61 @@
       margin-bottom: 20px;
     }
 
-    /* ── HERO ── */
-    .hero {
-      background: #f8f7f5;
-      padding: 110px 40px 100px;
-      min-height: 90vh;
+    /* ── CONTACT MAIN ── */
+    .contact-main {
+      min-height: 100vh;
       display: flex;
       align-items: center;
+      justify-content: center;
+      padding: 120px 40px 100px;
+      background: var(--white);
     }
 
-    .hero-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
+    .contact-block {
+      text-align: center;
+      max-width: 560px;
       width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
     }
 
-    .hero-image {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .hero-image-inner {
-      width: 100%;
-      max-width: 440px;
-      aspect-ratio: 4/5;
-      background: #d6d2cb;
-      border-radius: 6px;
-      overflow: hidden;
-    }
-
-    .hero-image-inner img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .hero-caption {
-      margin-top: 14px;
-      font-size: 12px;
-      color: var(--gray);
-      font-style: italic;
-      line-height: 1.55;
-      max-width: 440px;
-    }
-
-    .hero-text h1 {
+    .contact-block h1 {
       font-family: 'Archivo Black', sans-serif;
-      font-size: clamp(36px, 5.5vw, 76px);
+      font-size: clamp(36px, 6vw, 72px);
       line-height: 1.0;
       letter-spacing: -0.02em;
-      text-transform: uppercase;
-      margin: 16px 0 28px;
+      margin-bottom: 16px;
     }
 
-    .hero-tagline {
-      font-size: clamp(15px, 1.4vw, 18px);
-      color: #555;
-      line-height: 1.7;
-      font-style: italic;
-      max-width: 440px;
-    }
-
-    /* ── ABOUT ── */
-    .about {
-      padding: 100px 40px;
-      background: var(--white);
-      border-bottom: 1px solid rgba(0,0,0,0.08);
-    }
-
-    .about-inner {
-      max-width: 740px;
-      margin: 0 auto;
-    }
-
-    .about-inner p {
-      font-size: 18px;
-      color: #333;
-      line-height: 1.85;
-      margin-bottom: 32px;
-    }
-
-    .about-inner p:last-child { margin-bottom: 0; }
-
-    /* ── SERVICES ── */
-    .services {
-      padding: 80px 40px;
-      background: var(--light);
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      background: rgba(0,0,0,0.08);
-      margin-top: 48px;
-    }
-
-    .service-item {
-      background: var(--light);
-      padding: 40px 32px;
-      text-decoration: none;
-      color: var(--black);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      transition: background 0.25s;
-    }
-
-    .service-item:hover { background: var(--white); }
-
-    .service-item-num {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      color: var(--gray);
-    }
-
-    .service-item h3 {
-      font-family: 'Archivo Black', sans-serif;
-      font-size: 22px;
-      letter-spacing: -0.01em;
-    }
-
-    .service-item p {
-      font-size: 14px;
-      color: #666;
-      line-height: 1.6;
-      margin-top: 4px;
-    }
-
-    .service-item .service-arrow {
-      font-size: 20px;
-      margin-top: auto;
-      padding-top: 24px;
-      color: var(--gray);
-      transition: color 0.2s;
-    }
-
-    .service-item:hover .service-arrow { color: var(--black); }
-
-    /* ── CTA ── */
-    .cta {
-      background: var(--black);
-      color: var(--white);
-      padding: 120px 40px;
-      text-align: center;
-    }
-
-    .cta h2 {
-      font-family: 'Archivo Black', sans-serif;
-      font-size: clamp(32px, 5vw, 64px);
-      letter-spacing: -0.02em;
-      line-height: 1.05;
-      margin-bottom: 24px;
-    }
-
-    .cta p {
+    .contact-subtext {
       font-size: 17px;
-      color: rgba(255,255,255,0.65);
-      max-width: 480px;
-      margin: 0 auto 40px;
-      line-height: 1.7;
+      color: var(--gray);
+      margin-bottom: 48px;
+    }
+
+    .contact-divider {
+      width: 40px;
+      height: 1px;
+      background: rgba(0,0,0,0.15);
+      margin: 48px auto 40px;
+    }
+
+    .contact-company {
+      margin-bottom: 0;
+    }
+
+    .contact-company p {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+      line-height: 2;
+    }
+
+    .contact-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     /* ── FOOTER ── */
@@ -403,19 +285,7 @@
       .burger-btn { display: flex; }
       header { padding: 16px 24px; }
 
-      .hero { padding: 100px 24px 64px; min-height: auto; }
-      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
-      .hero-image { align-items: center; }
-      .hero-image-inner { max-width: 320px; }
-
-      .about { padding: 72px 24px; }
-      .about-inner { max-width: 100%; }
-      .about-inner p { font-size: 17px; }
-
-      .services { padding: 64px 24px; }
-      .services-grid { grid-template-columns: 1fr; }
-
-      .cta { padding: 80px 24px; }
+      .contact-main { padding: 100px 24px 80px; }
 
       footer { padding: 64px 24px 40px; }
       .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
@@ -423,9 +293,8 @@
     }
 
     @media (max-width: 480px) {
-      .hero { padding: 90px 20px 56px; }
-      .hero-image-inner { max-width: 100%; }
-      .cta { padding: 72px 20px; }
+      .contact-main { padding: 90px 20px 72px; }
+      .contact-buttons { flex-direction: column; align-items: center; }
       footer { padding: 48px 20px 32px; }
     }
   </style>
@@ -439,8 +308,8 @@
       <a href="selgus.html">Selgus</a>
       <a href="teraapia.html">Teraapia</a>
       <a href="fotograafia.html">Fotograafia</a>
-      <a href="minust.html" class="active">Minust</a>
-      <a href="kontakt.html">Kontakt</a>
+      <a href="minust.html">Minust</a>
+      <a href="kontakt.html" class="active">Kontakt</a>
     </nav>
     <button class="burger-btn" id="burgerBtn" aria-label="Menüü">
       <span></span><span></span><span></span>
@@ -448,75 +317,29 @@
   </header>
 
   <div class="mobile-menu" id="mobileMenu">
-    <a href="selgus.html"        onclick="closeMenu()">Selgus</a>
-    <a href="teraapia.html"      onclick="closeMenu()">Teraapia</a>
-    <a href="fotograafia.html"   onclick="closeMenu()">Fotograafia</a>
-    <a href="minust.html"        onclick="closeMenu()">Minust</a>
-    <a href="kontakt.html"       onclick="closeMenu()">Kontakt</a>
+    <a href="selgus.html"      onclick="closeMenu()">Selgus</a>
+    <a href="teraapia.html"    onclick="closeMenu()">Teraapia</a>
+    <a href="fotograafia.html" onclick="closeMenu()">Fotograafia</a>
+    <a href="minust.html"      onclick="closeMenu()">Minust</a>
+    <a href="kontakt.html"     onclick="closeMenu()">Kontakt</a>
   </div>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-image">
-        <div class="hero-image-inner">
-          <img src="DSC05766-crop.jpg" alt="Robert Kask" />
-        </div>
-        <p class="hero-caption">Pildil on ka meie koer, kes on täitnud minu lapsepõlve unistuse oma koerast.</p>
+  <!-- CONTACT -->
+  <main class="contact-main">
+    <div class="contact-block">
+      <h1>Võta minuga ühendust</h1>
+      <p class="contact-subtext">Päringud ja broneerimine</p>
+      <div class="contact-buttons">
+        <a class="btn" href="mailto:robert.kask@gmail.com">E-post</a>
+        <a class="btn" href="tel:+37256156109">Telefon</a>
       </div>
-      <div class="hero-text">
-        <span class="section-label">Minust</span>
-        <h1>Robert<br>Kask</h1>
-        <p class="hero-tagline">Terapeut, fotograaf ja looduses rändaja — hingelt otsija.</p>
+      <div class="contact-divider"></div>
+      <div class="contact-company">
+        <p>Robert Kask OÜ</p>
+        <p>Registrikood: 16933082</p>
       </div>
     </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="about">
-    <div class="about-inner">
-      <p>Olen poeg, vend, partner, isa ja sõber. Olen terapeut ja fotograaf. Olen looduses rändaja ja öötaeva vaatleja. Uudishimulik meel, kes otsib vastuseid elult ja inimestelt. Aastate jooksul olen õppinud, et kõik need rollid on ühe ja sama inimese osad — kelleks olen alati olnud, lihtsalt erinevate nimedega.</p>
-
-      <p>Lapsest saati on mul olnud uudishimulik meel — mis maailmas peitub, mis on võimalik ja kuidas asjad toimivad. Aastatega on see uudishimu suunanud mind järjest enam inimeste juurde — nende lugude, kogemuste ja sisemaailmade juurde. Sellest kasvab kõik, mida teen: soov aidata inimestel leida selgust ja liikuda edasi; tahe viia inimesi loodusesse, kus vaikus räägib rohkem kui sõnad; ning vajadus peatuda ja jäädvustada seda, mida silm näeb, aga meel sageli mitte.</p>
-
-      <p>Minu tee terapeudiõpinguteni algas 2017. aastal, mil julgesin lõpuks oma läbipõlemisest rääkida. Sealt sai alguse huvi iseenda toimemehhanismide vastu, fookus hakkas liikuma väliselt sisemisele. See, mida kogesin, avas ukse — nii iseenda juurde kui ka soovini toetada teisi. Läbisin terapeudi väljaõppe Holistika Instituudis Marina Paula Eberthi käe all, kelle loodud meetod põimib psühholoogia, transpersonaalse teraapia ja aastatuhandete tarkused tervikuks. Usun, et minu elukogemused, huvid ja silmaring võimaldavad mul sõltumata teemast pea igaühega ühise keele leida. Tule ja ole sina ise.</p>
-
-      <p>Fotograafia on olnud osa minust juba aastakümneid — alguse saanud soovist jäädvustada igapäevast ilu ja hetki, mis muidu unustuste hõlma vajuvad või sootuks märkamatuks jäävad. Mulle meeldib fotograafia üldiselt, kuid valdavalt pildistan loodust, maastikke, öötaevas toimuvat ja aeg-ajalt ka inimesi. Fotograafiaga tegelemine aitab mul kogeda kohalolu, on pannud mind maailma teise pilguga vaatama ning on minu peamine loominguline väljendus.</p>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section class="services">
-    <span class="section-label">Kuidas saan sind aidata</span>
-    <div class="services-grid">
-
-      <a class="service-item" href="selgus.html">
-        <h3>Selgus</h3>
-        <p>Selguse rännakud looduses — liikumine, vaikus ja rahu ühes kohas.</p>
-        <span class="service-arrow">→</span>
-      </a>
-
-      <a class="service-item" href="teraapia.html">
-        <h3>Teraapia</h3>
-        <p>Holistiline regressiooniteraapia — töö minevikuga, et vabastada olevik.</p>
-        <span class="service-arrow">→</span>
-      </a>
-
-      <a class="service-item" href="fotograafia.html">
-        <h3>Fotograafia</h3>
-        <p>Looduse, maastike ja öötaeva jäädvustamine — maailm teise pilguga.</p>
-        <span class="service-arrow">→</span>
-      </a>
-
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta">
-    <h2>Võta ühendust</h2>
-    <p>Küsimused, koostöösoovid või lihtsalt soov juttu teha — kirjuta mulle.</p>
-    <a class="btn btn-white" href="kontakt.html">Võta ühendust</a>
-  </section>
+  </main>
 
   <!-- FOOTER -->
   <footer>

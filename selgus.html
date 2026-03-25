@@ -417,57 +417,9 @@
       padding: 80px 40px 48px;
     }
 
-    .footer-top {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 40px;
-      align-items: start;
-      margin-bottom: 64px;
+    .footer-social {
+      margin-bottom: 40px;
     }
-
-    .footer-newsletter h3 {
-      font-family: 'Archivo Black', sans-serif;
-      font-size: clamp(22px, 3vw, 38px);
-      letter-spacing: -0.01em;
-      margin-bottom: 12px;
-    }
-
-    .footer-newsletter p {
-      font-size: 15px;
-      color: var(--gray);
-      margin-bottom: 24px;
-    }
-
-    .subscribe-form { display: flex; max-width: 420px; }
-
-    .subscribe-form input {
-      flex: 1;
-      padding: 13px 16px;
-      border: 1.5px solid var(--black);
-      border-right: none;
-      font-family: 'Archivo', sans-serif;
-      font-size: 14px;
-      outline: none;
-      background: var(--white);
-    }
-
-    .subscribe-form input::placeholder { color: #aaa; }
-
-    .subscribe-form button {
-      padding: 13px 24px;
-      background: var(--black);
-      color: var(--white);
-      border: 1.5px solid var(--black);
-      font-family: 'Archivo', sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .subscribe-form button:hover { background: #333; }
 
     .footer-social p {
       font-size: 11px;
@@ -476,10 +428,9 @@
       text-transform: uppercase;
       color: var(--gray);
       margin-bottom: 16px;
-      text-align: right;
     }
 
-    .social-links { display: flex; gap: 12px; justify-content: flex-end; }
+    .social-links { display: flex; gap: 12px; }
 
     .social-links a {
       display: flex;
@@ -511,6 +462,8 @@
       font-size: 20px;
       letter-spacing: 0.02em;
       text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
     }
 
     .footer-bottom nav { display: flex; gap: 24px; }
@@ -559,9 +512,6 @@
       .cta { padding: 80px 24px; }
 
       footer { padding: 64px 24px 40px; }
-      .footer-top { grid-template-columns: 1fr; }
-      .footer-social p { text-align: left; }
-      .social-links { justify-content: flex-start; }
       .footer-bottom {
         flex-direction: column;
         gap: 20px;
@@ -589,7 +539,7 @@
       <a href="teraapia.html">Teraapia</a>
       <a href="fotograafia.html">Fotograafia</a>
       <a href="minust.html">Minust</a>
-      <a href="index.html#kontakt">Kontakt</a>
+      <a href="kontakt.html">Kontakt</a>
     </nav>
     <button class="burger-btn" id="burgerBtn" aria-label="Menüü">
       <span></span><span></span><span></span>
@@ -601,7 +551,7 @@
     <a href="teraapia.html"    onclick="closeMenu()">Teraapia</a>
     <a href="fotograafia.html" onclick="closeMenu()">Fotograafia</a>
     <a href="minust.html"      onclick="closeMenu()">Minust</a>
-    <a href="index.html#kontakt" onclick="closeMenu()">Kontakt</a>
+    <a href="kontakt.html" onclick="closeMenu()">Kontakt</a>
   </div>
 
   <!-- HERO -->
@@ -615,7 +565,7 @@
       </div>
       <div class="hero-desc">
         <p>Kohtumine looduses, kus liikumine, vaikus ja vestlus avavad tee sisemise selguseni.</p>
-        <a class="btn btn-white" href="index.html#kontakt">Võta ühendust</a>
+        <a class="btn btn-white" href="kontakt.html">Võta ühendust</a>
       </div>
     </div>
   </section>
@@ -701,39 +651,29 @@
   <section class="cta">
     <h2>Tule minuga loodusesse</h2>
     <p>Broneeri oma selguse ränak ja lähme loodusesse —<br>koos otsima seda, mis sul juba olemas on.</p>
-    <a class="btn btn-white" href="index.html#kontakt">Võta ühendust</a>
+    <a class="btn btn-white" href="kontakt.html">Võta ühendust</a>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-top">
-      <div class="footer-newsletter">
-        <h3>Püsi kursis</h3>
-        <p>Liitu uudiskirjaga ja saad teada esimesena uutest töötubadest, seanssidest ja fotodest.</p>
-        <form class="subscribe-form" onsubmit="return false;">
-          <input type="email" placeholder="E-posti aadress" />
-          <button type="submit">Liitu</button>
-        </form>
-      </div>
-      <div class="footer-social">
-        <p>Jälgi</p>
-        <div class="social-links">
-          <a href="#" title="Instagram">In</a>
-          <a href="#" title="LinkedIn">Li</a>
-          <a href="#" title="Facebook">Fb</a>
-        </div>
+    <div class="footer-social">
+      <p>Jälgi</p>
+      <div class="social-links">
+        <a href="#" title="Instagram">In</a>
+        <a href="#" title="LinkedIn">Li</a>
+        <a href="#" title="Facebook">Fb</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="footer-logo">Robert Kask</div>
+      <a class="footer-logo" href="index.html">Robert Kask</a>
       <nav>
         <a href="selgus.html">Selgus</a>
         <a href="teraapia.html">Teraapia</a>
         <a href="fotograafia.html">Fotograafia</a>
         <a href="minust.html">Minust</a>
-        <a href="index.html#kontakt">Kontakt</a>
+        <a href="kontakt.html">Kontakt</a>
       </nav>
-      <div class="footer-copy">&copy; 2026 Robert Kask</div>
+      <div class="footer-copy">&copy; 2026 Robert Kask OÜ</div>
     </div>
   </footer>
 
