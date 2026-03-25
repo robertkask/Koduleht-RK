@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teraapia — Robert Kask</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Archivo+Black&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --gray: #888;
+      --light: #f0eeeb;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Archivo', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 400;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      background: var(--white);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 24px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      z-index: 410;
+      position: relative;
+    }
+
+    .desktop-nav { display: flex; gap: 32px; align-items: center; }
+
+    .desktop-nav a {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      transition: opacity 0.2s;
+    }
+
+    .desktop-nav a:hover { opacity: 0.45; }
+    .desktop-nav a.active { border-bottom: 2px solid var(--black); padding-bottom: 2px; }
+
+    /* ── HAMBURGER ── */
+    .burger-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 7px;
+      width: 44px; height: 44px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+      z-index: 410;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .burger-btn span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background: #000;
+      border-radius: 0;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .burger-btn.open span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+    .burger-btn.open span:nth-child(2) { opacity: 0; }
+    .burger-btn.open span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: flex;
+      position: fixed;
+      inset: 0;
+      background: var(--white);
+      z-index: 350;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 36px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .mobile-menu.open { opacity: 1; pointer-events: all; }
+
+    .mobile-menu a {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(32px, 8vw, 56px);
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      transition: opacity 0.2s;
+    }
+
+    .mobile-menu a:hover { opacity: 0.4; }
+
+    /* ── SHARED ── */
+    .btn {
+      display: inline-block;
+      padding: 13px 30px;
+      border: 1.5px solid var(--black);
+      font-family: 'Archivo', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s;
+    }
+    .btn:hover { background: var(--black); color: var(--white); }
+
+    .btn-white {
+      border-color: rgba(255,255,255,0.8);
+      color: var(--white);
+    }
+    .btn-white:hover { background: var(--white); color: var(--black); }
+
+    .section-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 20px;
+    }
+
+    /* ── HERO — text only, light gray ── */
+    .hero {
+      background: #f8f7f5;
+      min-height: 100vh;
+      padding: 80px 40px 64px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .hero-top {
+      padding-top: 40px;
+    }
+
+    .hero-top h1 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(44px, 8vw, 118px);
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      color: var(--black);
+      text-transform: uppercase;
+      margin-top: 12px;
+    }
+
+    .hero-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding-top: 48px;
+    }
+
+    .hero-meta {
+      max-width: 300px;
+      text-align: right;
+    }
+
+    .hero-meta p {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.65;
+      font-style: italic;
+      margin-bottom: 28px;
+    }
+
+    /* ── FAQ ── */
+    .faq {
+      padding: 0 40px;
+      background: var(--white);
+    }
+
+    .faq-item {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      padding: 72px 0;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      align-items: start;
+    }
+
+    .faq-item:last-child {
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      margin-bottom: 100px;
+    }
+
+    .faq-question {
+      position: sticky;
+      top: 100px;
+    }
+
+    .faq-question h3 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(18px, 1.8vw, 24px);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .faq-answer p {
+      font-size: 17px;
+      color: #333;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .faq-answer p:last-child { margin-bottom: 0; }
+
+    .faq-answer ul {
+      list-style: none;
+      margin: 4px 0 24px;
+    }
+
+    .faq-answer ul li {
+      font-size: 17px;
+      color: #333;
+      line-height: 1.75;
+      padding: 6px 0 6px 22px;
+      position: relative;
+    }
+
+    .faq-answer ul li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      top: 12px;
+      color: var(--black);
+      line-height: 1.75;
+    }
+
+    .faq-sub-label {
+      display: block;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: normal;
+      text-transform: none;
+      color: var(--black);
+      margin: 28px 0 8px;
+    }
+
+    .faq-highlight {
+      border-left: 2px solid var(--black);
+      padding-left: 20px;
+      font-style: italic;
+      color: var(--black) !important;
+      margin-top: 24px;
+    }
+
+    /* ── PRICING ── */
+    .pricing {
+      padding: 24px 40px 100px;
+      background: var(--white);
+    }
+
+    .pricing-header {
+      margin-bottom: 48px;
+    }
+
+    .pricing-header h2 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(28px, 3vw, 44px);
+      letter-spacing: -0.02em;
+      margin-top: 16px;
+    }
+
+    .pricing-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      background: transparent;
+    }
+
+    .price-card {
+      background: var(--white);
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(0,0,0,0.12);
+    }
+
+    .price-card-featured { background: var(--white); }
+
+    .price-card-future {
+      background: var(--white);
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 360px;
+    }
+
+    /* Card header area — fixed min-height so price numbers align */
+    .price-card-top {
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      margin-bottom: 8px;
+    }
+
+    .price-tag-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .price-card h3 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .price-card-sub {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    .price-amount {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(24px, 3vw, 36px);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-top: 32px;
+      margin-bottom: 4px;
+    }
+
+    .price-currency {
+      font-family: 'Archivo', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      vertical-align: super;
+      margin-right: 2px;
+    }
+
+    .price-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(0,0,0,0.1);
+      margin: 32px 0;
+    }
+
+    .price-details {
+      list-style: none;
+      flex: 1;
+    }
+
+    .price-details li {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.6;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+    }
+
+    .price-details li:last-child { border-bottom: none; }
+
+    .price-detail-key {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      min-width: 70px;
+      flex-shrink: 0;
+    }
+
+    .price-card .btn {
+      margin-top: 36px;
+      text-align: center;
+    }
+
+    .price-future-icon {
+      font-size: 32px;
+      color: rgba(0,0,0,0.12);
+      font-weight: 300;
+      margin-bottom: 16px;
+      display: block;
+      font-family: 'Archivo', sans-serif;
+    }
+
+    .price-future-text {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.2);
+    }
+
+    /* ── CTA ── */
+    .cta {
+      background: var(--black);
+      color: var(--white);
+      padding: 120px 40px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(32px, 5vw, 64px);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+
+    .cta p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.65);
+      max-width: 480px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--white);
+      border-top: 1px solid rgba(0,0,0,0.1);
+      padding: 80px 40px 48px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: start;
+      margin-bottom: 64px;
+    }
+
+    .footer-newsletter h3 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(22px, 3vw, 38px);
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+
+    .footer-newsletter p { font-size: 15px; color: var(--gray); margin-bottom: 24px; }
+
+    .subscribe-form { display: flex; max-width: 420px; }
+
+    .subscribe-form input {
+      flex: 1;
+      padding: 13px 16px;
+      border: 1.5px solid var(--black);
+      border-right: none;
+      font-family: 'Archivo', sans-serif;
+      font-size: 14px;
+      outline: none;
+      background: var(--white);
+    }
+
+    .subscribe-form input::placeholder { color: #aaa; }
+
+    .subscribe-form button {
+      padding: 13px 24px;
+      background: var(--black);
+      color: var(--white);
+      border: 1.5px solid var(--black);
+      font-family: 'Archivo', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .subscribe-form button:hover { background: #333; }
+
+    .footer-social p {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 16px;
+      text-align: right;
+    }
+
+    .social-links { display: flex; gap: 12px; justify-content: flex-end; }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px; height: 44px;
+      border: 1.5px solid var(--black);
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--black);
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .social-links a:hover { background: var(--black); color: var(--white); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .footer-logo {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 20px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .footer-bottom nav { display: flex; gap: 24px; }
+    .footer-bottom nav a {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--gray);
+      transition: color 0.2s;
+    }
+    .footer-bottom nav a:hover { color: var(--black); }
+    .footer-copy { font-size: 12px; color: var(--gray); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .desktop-nav { display: none; }
+      .burger-btn { display: flex; }
+      header { padding: 16px 24px; }
+
+      .hero { padding: 80px 24px 48px; min-height: 80vh; }
+      .hero-top { padding-top: 32px; }
+      .hero-bottom { justify-content: flex-start; padding-top: 40px; }
+      .hero-meta { text-align: left; max-width: 100%; }
+
+      .faq { padding: 0 24px; }
+      .faq-item { grid-template-columns: 1fr; gap: 24px; padding: 52px 0; }
+      .faq-item:last-child { margin-bottom: 72px; }
+      .faq-question { position: static; }
+
+      .pricing { padding: 72px 24px; }
+      .pricing-cards { grid-template-columns: 1fr; gap: 2px; }
+      .price-card-future { min-height: 120px; }
+
+      .cta { padding: 80px 24px; }
+
+      footer { padding: 64px 24px 40px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-social p { text-align: left; }
+      .social-links { justify-content: flex-start; }
+      .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+      .footer-bottom nav { flex-wrap: wrap; justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-top h1 { font-size: clamp(44px, 16vw, 80px); }
+      .cta { padding: 72px 20px; }
+      footer { padding: 48px 20px 32px; }
+      .price-card { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a class="logo" href="index.html">Robert Kask</a>
+    <nav class="desktop-nav">
+      <a href="selgus.html">Selgus</a>
+      <a href="teraapia.html" class="active">Teraapia</a>
+      <a href="fotograafia.html">Fotograafia</a>
+      <a href="minust.html">Minust</a>
+      <a href="index.html#kontakt">Kontakt</a>
+    </nav>
+    <button class="burger-btn" id="burgerBtn" aria-label="Menüü">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="selgus.html"        onclick="closeMenu()">Selgus</a>
+    <a href="teraapia.html"      onclick="closeMenu()">Teraapia</a>
+    <a href="fotograafia.html"   onclick="closeMenu()">Fotograafia</a>
+    <a href="minust.html"        onclick="closeMenu()">Minust</a>
+    <a href="index.html#kontakt" onclick="closeMenu()">Kontakt</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-top">
+      <h1>Rännakud<br>sisemaailma</h1>
+    </div>
+    <div class="hero-bottom">
+      <div class="hero-meta">
+        <p>Holistiline regressiooniteraapia —<br>töö minevikuga, et vabastada olevik.</p>
+        <a class="btn" href="index.html#kontakt">Võta ühendust</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <h3>Mis on holistiline regressiooniteraapia?</h3>
+      </div>
+      <div class="faq-answer">
+        <p>Holistiline regressiooniteraapia (HRT) on terviklik teraapiameetod, mis käsitleb inimest lahutamatu tervikuna – keha, tunded, mõtted ja hing toimivad alati kooskõlas. Sõna "holistiline" tuleneb kreekakeelsest sõnast holos, mis tähendab „täielik" ja „terve". Regressioon tähendab liikumist ajas tagasi – minevikusündmuste meenutamist ja taaskogemist, et leida üles probleemide algpõhjused ning need läbi töötada.</p>
+        <p>HRT on loodud Holistika Instituudi asutaja Marina Paula Eberthi poolt, kes on mitmekümne aasta jooksul põiminud kokku psühholoogia, psühhoteraapia, transpersonaalse psühholoogia, aastatuhandete tagused tarkused ja tänapäeva uusimate teadusuuringute tulemusena saadud teadmised.</p>
+        <p>HRT on teraapia täiesti tavalistele inimestele – see ei ole mõeldud ainult neile, kellel on tõsised probleemid, vaid kõigile, kes soovivad, et tavapärasest elust saaks parim võimalik elu, täis heaolu, rahulolu ja õnnetunnet.</p>
+        <p>Teraapia põhineb arusaamal, et enamiku psühholoogiliste ja psühhosomaatiliste probleemide juured asuvad minevikus – olukordades, kus kogetud negatiivsed emotsioonid (hirm, viha, kurbus, abitus jne) jäid väljendamata ja blokeerusid. HRT abil minnakse tagasi nende algpõhjuste juurde, töötatakse need läbi ning vabastatakse kinnikiilunud tunde- ja mõttemustrid.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <h3>Mis seansil toimub?</h3>
+      </div>
+      <div class="faq-answer">
+        <p>Seanss algab vestlusega kliendi probleemide, vajaduste ja eesmärkide üle. Oluline on seada lõppeesmärk – positiivses vormis kujutluspilt sellest, milline elu võiks välja näha pärast muutust.</p>
+        <p>Teraapia põhiosa on holistiline rännak – klient lebab lõdvestunult ja silmad kinni diivanil, samas kui terapeut kasutab lõõgastustehnikaid, mis aitavad jõuda muutunud teadvusseisundisse. See ei ole hüpnoos – klient on kogu aeg täiesti teadlik iseendast ja oma ümbrusest ning vestleb terapeudiga. Muutunud teadvusseisundis pääsetakse hõlpsamini ligi alateadvuses olevatele tunnetele ja traumaatilistele mälestustele, et mõista ja muuta vanu mõtte- ja käitumismustreid.</p>
+        <p>Valida saab järgmiste holistilise regressiooniteraapia vormide vahel:</p>
+        <span class="faq-sub-label">Holistiline nelik</span>
+        <p>Holistiline nelik on HRT-s välja töötatud teraapiatsükkel, mis koosneb neljast seansist, mis toimuvad kahe nädala jooksul ning seejuures vähemalt kaks seanssi toimuvad järjestikulistel päevadel. See formaat on eriti tõhus, kuna intensiivne töö lühikese aja jooksul loob sügava ja kiire sisemise muutuse. Esmakordsetel klientidel on tavaks alustada just holistilise nelikuga.</p>
+        <span class="faq-sub-label">Üksikseanss</span>
+        <p>Kestusega 2–3 tundi. Mõnikord piisab ühest seansist, et saavutada märkimisväärne muutus.</p>
+        <p>Terapeudina olen kogu protsessi vältel sinu kõrval – suunav, toetav ja hoidev. Turvaline ruum on protsessi lahutamatu osa. Sa ei ole üksi.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <h3>Kellele sobib?</h3>
+      </div>
+      <div class="faq-answer">
+        <p><strong>Holistiline regressiooniteraapia sobib kõigile, kes soovivad:</strong></p>
+        <ul>
+          <li>mõista oma probleemide ja käitumismustrite sügavamaid juuri</li>
+          <li>vabaneda emotsionaalsetest blokeeringutest ja mineviku koormusest</li>
+          <li>parandada oma suhteid ja elukvaliteeti</li>
+          <li>leida vastuseid küsimustele iseenda ja oma elu kohta</li>
+          <li>võtta vastutus oma elu eest ja muuta seda teadlikult</li>
+        </ul>
+        <p class="faq-highlight">Teraapia sobib inimesele, kes on valmis aktiivselt kaasa töötama – see on kliendi ja terapeudi vaheline koostöö, mitte passiivne protsess.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <h3>Millist kasu saab?</h3>
+      </div>
+      <div class="faq-answer">
+        <p><strong>Pärast teraapiat kogevad kliendid sageli:</strong></p>
+        <ul>
+          <li>kergendustunnet ja vabadust emotsionaalsetest blokeeringutest</li>
+          <li>suuremat sisemist rahu ja tasakaalu</li>
+          <li>paremat kontakti iseendaga – oma vajaduste ja soovide märkamist</li>
+          <li>paremaid suhteid lähedaste ja kolleegidega</li>
+          <li>suuremat elujõudu, julgust ja töövõimet</li>
+          <li>mõnikord kaovad ka pikaajalised füüsilised vaevused</li>
+          <li>selgemat arusaama oma elutee ja -valikute kohta</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <h3>Kellele ei sobi?</h3>
+      </div>
+      <div class="faq-answer">
+        <p><strong>Holistiline regressiooniteraapia ei sobi:</strong></p>
+        <ul>
+          <li>inimestele, kellel on diagnoositud skisofreenia või teised psühhootilised häired, kuna teraapia toimub muutunud teadvusseisundis ja eeldab selget piiri reaalse ja mittereaalse vahel</li>
+          <li>narkootiliste ainete mõju all olevatele inimestele</li>
+          <li>ägeda kriisi- või šokiseisundi puhul, mil inimesel puudub adekvaatne enesetaju</li>
+          <li>ajukahjustusest tingitud psüühikahäiretega inimestele</li>
+          <li>inimestele, kes ootavad, et terapeut kogu töö nende eest ära teeks</li>
+        </ul>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing">
+    <div class="pricing-header">
+      <span class="section-label">Hinnad</span>
+      <h2>Vali endale sobiv formaat</h2>
+    </div>
+    <div class="pricing-cards">
+
+      <!-- Card 1: Single session -->
+      <div class="price-card">
+        <div class="price-card-top">
+          <h3>Holistiline regressiooniteraapia</h3>
+          <span class="price-card-sub">Üksikseanss</span>
+        </div>
+        <div class="price-amount"><span class="price-currency">€</span>120</div>
+        <div class="price-divider"></div>
+        <ul class="price-details">
+          <li>
+            <span class="price-detail-key">Kestus</span>
+            <span>2–3 tundi</span>
+          </li>
+          <li>
+            <span class="price-detail-key">Keel</span>
+            <span>Eesti keel, inglise keel</span>
+          </li>
+          <li>
+            <span class="price-detail-key">Asukoht</span>
+            <span>Holistika Instituut, Endla 15, Tallinn</span>
+          </li>
+        </ul>
+        <a class="btn" href="index.html#kontakt">Võta ühendust</a>
+      </div>
+
+      <!-- Card 2: Holistiline Nelik (featured) -->
+      <div class="price-card price-card-featured">
+        <div class="price-card-top">
+          <span class="price-tag-label">Soovitatav</span>
+          <h3>Holistiline nelik</h3>
+          <span class="price-card-sub">Neli seanssi tervikliku protsessina</span>
+        </div>
+        <div class="price-amount"><span class="price-currency">€</span>450</div>
+        <div class="price-divider"></div>
+        <ul class="price-details">
+          <li>
+            <span class="price-detail-key">Kestus</span>
+            <span>4 × kuni 3 tundi</span>
+          </li>
+          <li>
+            <span class="price-detail-key">Keel</span>
+            <span>Eesti keel, inglise keel</span>
+          </li>
+          <li>
+            <span class="price-detail-key">Asukoht</span>
+            <span>Holistika Instituut, Endla 15, Tallinn</span>
+          </li>
+        </ul>
+        <a class="btn" href="index.html#kontakt">Võta ühendust</a>
+      </div>
+
+      <!-- Card 3: Future placeholder -->
+      <div class="price-card price-card-future">
+        <span class="price-future-icon">+</span>
+        <span class="price-future-text">Peagi lisandub</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Alusta oma teekonda</h2>
+    <p>Kirjuta mulle ja räägime, kas ja kuidas saan sind toetada.</p>
+    <a class="btn btn-white" href="index.html#kontakt">Võta ühendust</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-newsletter">
+        <h3>Püsi kursis</h3>
+        <p>Liitu uudiskirjaga ja saad teada esimesena uutest töötubadest, seanssidest ja fotodest.</p>
+        <form class="subscribe-form" onsubmit="return false;">
+          <input type="email" placeholder="E-posti aadress" />
+          <button type="submit">Liitu</button>
+        </form>
+      </div>
+      <div class="footer-social">
+        <p>Jälgi</p>
+        <div class="social-links">
+          <a href="#" title="Instagram">In</a>
+          <a href="#" title="LinkedIn">Li</a>
+          <a href="#" title="Facebook">Fb</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-logo">Robert Kask</div>
+      <nav>
+        <a href="selgus.html">Selgus</a>
+        <a href="teraapia.html">Teraapia</a>
+        <a href="fotograafia.html">Fotograafia</a>
+        <a href="minust.html">Minust</a>
+        <a href="index.html#kontakt">Kontakt</a>
+      </nav>
+      <div class="footer-copy">&copy; 2026 Robert Kask</div>
+    </div>
+  </footer>
+
+  <script>
+    const burgerBtn  = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    burgerBtn.addEventListener('click', () => {
+      const isOpen = burgerBtn.classList.toggle('open');
+      mobileMenu.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    function closeMenu() {
+      burgerBtn.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  </script>
+
+</body>
+</html>

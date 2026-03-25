@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Selgus — Robert Kask</title>
+  <title>Minust — Robert Kask</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Archivo+Black&display=swap" rel="stylesheet" />
@@ -37,7 +37,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 20px 40px;
-      background: #fff;
+      background: var(--white);
       border-bottom: 1px solid rgba(0,0,0,0.08);
     }
 
@@ -159,232 +159,150 @@
       margin-bottom: 20px;
     }
 
-    /* ── HERO — full-bleed photo ── */
+    /* ── HERO ── */
     .hero {
-      position: relative;
-      height: 100vh;
-      min-height: 600px;
-      overflow: hidden;
+      background: #f8f7f5;
+      padding: 110px 40px 100px;
+      min-height: 90vh;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
     }
 
-    .hero-photo {
-      position: absolute;
-      inset: 0;
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
-    .hero-photo img {
+    .hero-image {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .hero-image-inner {
+      width: 100%;
+      max-width: 440px;
+      aspect-ratio: 4/5;
+      background: #d6d2cb;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .hero-image-inner img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center center;
       display: block;
     }
 
-    /* Gradient: dark at bottom for text legibility, light/clear at top */
-    .hero-photo::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.0) 0%,
-        rgba(0,0,0,0.08) 50%,
-        rgba(0,0,0,0.72) 100%
-      );
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      padding: 64px 40px;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 40px;
-    }
-
-    .hero-title h1 {
-      font-family: 'Archivo Black', sans-serif;
-      font-size: clamp(64px, 12vw, 160px);
-      line-height: 0.92;
-      letter-spacing: -0.03em;
-      color: var(--white);
-      text-transform: uppercase;
-    }
-
-    .hero-desc {
-      max-width: 340px;
-      text-align: right;
-    }
-
-    .hero-desc p {
-      font-size: 16px;
-      color: rgba(255,255,255,0.85);
-      line-height: 1.65;
-      margin-bottom: 28px;
+    .hero-caption {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--gray);
       font-style: italic;
+      line-height: 1.55;
+      max-width: 440px;
     }
 
-    /* ── INTRO ── */
-    .intro {
+    .hero-text h1 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(36px, 5.5vw, 76px);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin: 16px 0 28px;
+    }
+
+    .hero-tagline {
+      font-size: clamp(15px, 1.4vw, 18px);
+      color: #555;
+      line-height: 1.7;
+      font-style: italic;
+      max-width: 440px;
+    }
+
+    /* ── ABOUT ── */
+    .about {
       padding: 100px 40px;
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 80px;
-      align-items: start;
+      background: var(--white);
       border-bottom: 1px solid rgba(0,0,0,0.08);
     }
 
-    .intro-left h2 {
-      font-family: 'Archivo Black', sans-serif;
-      font-size: clamp(28px, 3vw, 42px);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
+    .about-inner {
+      max-width: 740px;
+      margin: 0 auto;
     }
 
-    .intro-right p {
+    .about-inner p {
       font-size: 18px;
       color: #333;
-      line-height: 1.8;
-      margin-bottom: 24px;
-    }
-
-    .intro-right p:last-child { margin-bottom: 0; }
-
-    /* ── SPLIT PHOTO + QUOTE ── */
-    .split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 560px;
-    }
-
-    .split-photo {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .split-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: 30% center;
-      display: block;
-      transition: transform 6s ease;
-    }
-
-    .split-photo:hover img { transform: scale(1.04); }
-
-    .split-text {
-      background: var(--black);
-      color: var(--white);
-      padding: 80px 64px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .split-text .section-label { color: rgba(255,255,255,0.45); margin-bottom: 32px; }
-
-    .split-text blockquote {
-      font-family: 'Archivo', sans-serif;
-      font-style: italic;
-      font-size: clamp(20px, 2.2vw, 30px);
-      line-height: 1.5;
-      font-weight: 400;
-      margin-bottom: 40px;
-      letter-spacing: -0.01em;
-    }
-
-    .split-text cite {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.45);
-      font-style: normal;
-    }
-
-    /* ── OVERVIEW (combined) ── */
-    .overview {
-      padding: 100px 40px;
-      background: var(--light);
-    }
-
-    .overview-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-    }
-
-    .overview-left h3,
-    .overview-right h3 {
-      font-family: 'Archivo Black', sans-serif;
-      font-size: 20px;
-      letter-spacing: -0.01em;
-      margin-bottom: 20px;
-    }
-
-    .overview-list {
-      list-style: none;
+      line-height: 1.85;
       margin-bottom: 32px;
     }
 
-    .overview-list li {
-      font-size: 16px;
+    .about-inner p:last-child { margin-bottom: 0; }
+
+    /* ── SERVICES ── */
+    .services {
+      padding: 80px 40px;
+      background: var(--light);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: rgba(0,0,0,0.08);
+      margin-top: 48px;
+    }
+
+    .service-item {
+      background: var(--light);
+      padding: 40px 32px;
+      text-decoration: none;
       color: var(--black);
-      line-height: 1.7;
-      padding-left: 18px;
-      position: relative;
-      margin-bottom: 4px;
-    }
-
-    .overview-list li::before {
-      content: '•';
-      position: absolute;
-      left: 0;
-    }
-
-    .overview-left p {
-      font-size: 16px;
-      color: var(--black);
-      line-height: 1.75;
-      margin-bottom: 16px;
-    }
-
-    .overview-right .btn {
-      margin-top: 32px;
-    }
-
-    .info-list {
-      list-style: none;
-      margin-bottom: 40px;
-    }
-
-    .info-list li {
       display: flex;
-      gap: 20px;
-      padding: 20px 0;
-      border-bottom: 1px solid rgba(0,0,0,0.08);
-      font-size: 15px;
-      align-items: baseline;
+      flex-direction: column;
+      gap: 10px;
+      transition: background 0.25s;
     }
 
-    .info-list li:first-child { border-top: 1px solid rgba(0,0,0,0.08); }
+    .service-item:hover { background: var(--white); }
 
-    .info-label {
+    .service-item-num {
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+      letter-spacing: 0.2em;
       color: var(--gray);
-      min-width: 130px;
-      flex-shrink: 0;
     }
 
+    .service-item h3 {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+    }
+
+    .service-item p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+      margin-top: 4px;
+    }
+
+    .service-item .service-arrow {
+      font-size: 20px;
+      margin-top: auto;
+      padding-top: 24px;
+      color: var(--gray);
+      transition: color 0.2s;
+    }
+
+    .service-item:hover .service-arrow { color: var(--black); }
 
     /* ── CTA ── */
     .cta {
@@ -432,11 +350,7 @@
       margin-bottom: 12px;
     }
 
-    .footer-newsletter p {
-      font-size: 15px;
-      color: var(--gray);
-      margin-bottom: 24px;
-    }
+    .footer-newsletter p { font-size: 15px; color: var(--gray); margin-bottom: 24px; }
 
     .subscribe-form { display: flex; max-width: 420px; }
 
@@ -524,37 +438,25 @@
       transition: color 0.2s;
     }
     .footer-bottom nav a:hover { color: var(--black); }
-
     .footer-copy { font-size: 12px; color: var(--gray); }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .desktop-nav { display: none; }
       .burger-btn { display: flex; }
-
       header { padding: 16px 24px; }
 
-      .hero-content {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 48px 24px;
-        gap: 24px;
-      }
+      .hero { padding: 100px 24px 64px; min-height: auto; }
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-image { align-items: center; }
+      .hero-image-inner { max-width: 320px; }
 
-      .hero-desc { text-align: left; max-width: 100%; }
+      .about { padding: 72px 24px; }
+      .about-inner { max-width: 100%; }
+      .about-inner p { font-size: 17px; }
 
-      .intro {
-        grid-template-columns: 1fr;
-        gap: 32px;
-        padding: 72px 24px;
-      }
-
-      .split { grid-template-columns: 1fr; }
-      .split-photo { min-height: 360px; }
-      .split-text { padding: 56px 24px; }
-
-      .overview { padding: 72px 24px; }
-      .overview-grid { grid-template-columns: 1fr; gap: 48px; }
+      .services { padding: 64px 24px; }
+      .services-grid { grid-template-columns: 1fr; }
 
       .cta { padding: 80px 24px; }
 
@@ -562,18 +464,13 @@
       .footer-top { grid-template-columns: 1fr; }
       .footer-social p { text-align: left; }
       .social-links { justify-content: flex-start; }
-      .footer-bottom {
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
-      }
+      .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
       .footer-bottom nav { flex-wrap: wrap; justify-content: center; }
     }
 
     @media (max-width: 480px) {
-      .hero-title h1 { font-size: clamp(52px, 18vw, 90px); }
-      .how { padding: 60px 20px; }
-      .practical { padding: 60px 20px; }
+      .hero { padding: 90px 20px 56px; }
+      .hero-image-inner { max-width: 100%; }
       .cta { padding: 72px 20px; }
       footer { padding: 48px 20px 32px; }
     }
@@ -585,10 +482,10 @@
   <header>
     <a class="logo" href="index.html">Robert Kask</a>
     <nav class="desktop-nav">
-      <a href="selgus.html" class="active">Selgus</a>
+      <a href="selgus.html">Selgus</a>
       <a href="teraapia.html">Teraapia</a>
       <a href="fotograafia.html">Fotograafia</a>
-      <a href="minust.html">Minust</a>
+      <a href="minust.html" class="active">Minust</a>
       <a href="index.html#kontakt">Kontakt</a>
     </nav>
     <button class="burger-btn" id="burgerBtn" aria-label="Menüü">
@@ -597,110 +494,73 @@
   </header>
 
   <div class="mobile-menu" id="mobileMenu">
-    <a href="selgus.html"      onclick="closeMenu()">Selgus</a>
-    <a href="teraapia.html"    onclick="closeMenu()">Teraapia</a>
-    <a href="fotograafia.html" onclick="closeMenu()">Fotograafia</a>
-    <a href="minust.html"      onclick="closeMenu()">Minust</a>
+    <a href="selgus.html"        onclick="closeMenu()">Selgus</a>
+    <a href="teraapia.html"      onclick="closeMenu()">Teraapia</a>
+    <a href="fotograafia.html"   onclick="closeMenu()">Fotograafia</a>
+    <a href="minust.html"        onclick="closeMenu()">Minust</a>
     <a href="index.html#kontakt" onclick="closeMenu()">Kontakt</a>
   </div>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-photo">
-      <img src="DSC02595-HDR-FB.jpg" alt="Raba hommik — selguse ränak looduses" />
-    </div>
-    <div class="hero-content">
-      <div class="hero-title">
-        <h1>Selgus</h1>
+    <div class="hero-inner">
+      <div class="hero-image">
+        <div class="hero-image-inner">
+          <img src="DSC05766-crop.jpg" alt="Robert Kask" />
+        </div>
+        <p class="hero-caption">Pildil on ka meie koer, kes on täitnud minu lapsepõlve unistuse oma koerast.</p>
       </div>
-      <div class="hero-desc">
-        <p>Kohtumine looduses, kus liikumine, vaikus ja vestlus avavad tee sisemise selguseni.</p>
-        <a class="btn btn-white" href="index.html#kontakt">Võta ühendust</a>
+      <div class="hero-text">
+        <span class="section-label">Minust</span>
+        <h1>Robert<br>Kask</h1>
+        <p class="hero-tagline">Terapeut, fotograaf ja looduses rändaja — hingelt otsija.</p>
       </div>
     </div>
   </section>
 
-  <!-- INTRO -->
-  <section class="intro">
-    <div class="intro-left">
-      <span class="section-label">Mis see on</span>
-      <h2>Rännak, mis avab rohkem kui lihtsalt matk.</h2>
-    </div>
-    <div class="intro-right">
-      <p>Selguse rännak looduses on individuaalne kohtumine, mis ühendab liikumise ja vestluse ning kus looduskeskkond on aktiivne osa protsessist. Liikumine aitab mõtetel liikuma hakata, avarus loob perspektiivi ja vaikus toob esile selle, mis igapäevaelus sageli tahaplaanile jääb.</p>
-      <p>Alustame rahuliku liikumisega looduses — ilma kiirustamata ja sageli ka vaikuses. Selles tempos tekib ruum, kus saavad esile tulla küsimused — need, mida sa kaasa tõid, või need, mis kujunevad rännaku käigus.</p>
-      <p>Seejärel peatume ning vestleme. Vestlus kujuneb vastavalt sellele, mis sinu jaoks hetkes oluline on — mõni konkreetne küsimus või soov paremini aru saada, mis sinu sees toimub.</p>
-      <p>Kohtumise käigus kasutan vajadusel holistilise teraapia ja vestlustehnikate elemente, et toetada sind selguse leidmisel. Fookus on sellel, et sul tekiks võimalus iseennast kuulata ja vastusteni jõuda.</p>
+  <!-- ABOUT -->
+  <section class="about">
+    <div class="about-inner">
+      <p>Olen poeg, vend, partner, isa ja sõber. Olen terapeut ja fotograaf. Olen looduses rändaja ja öötaeva vaatleja. Uudishimulik meel, kes otsib vastuseid elult ja inimestelt. Aastate jooksul olen õppinud, et kõik need rollid on ühe ja sama inimese osad — kelleks olen alati olnud, lihtsalt erinevate nimedega.</p>
+
+      <p>Lapsest saati on mul olnud uudishimulik meel — mis maailmas peitub, mis on võimalik ja kuidas asjad toimivad. Aastatega on see uudishimu suunanud mind järjest enam inimeste juurde — nende lugude, kogemuste ja sisemaailmade juurde. Sellest kasvab kõik, mida teen: soov aidata inimestel leida selgust ja liikuda edasi; tahe viia inimesi loodusesse, kus vaikus räägib rohkem kui sõnad; ning vajadus peatuda ja jäädvustada seda, mida silm näeb, aga meel sageli mitte.</p>
+
+      <p>Minu tee terapeudiõpinguteni algas 2017. aastal, mil julgesin lõpuks oma läbipõlemisest rääkida. Sealt sai alguse huvi iseenda toimemehhanismide vastu, fookus hakkas liikuma väliselt sisemisele. See, mida kogesin, avas ukse — nii iseenda juurde kui ka soovini toetada teisi. Läbisin terapeudi väljaõppe Holistika Instituudis Marina Paula Eberthi käe all, kelle loodud meetod põimib psühholoogia, transpersonaalse teraapia ja aastatuhandete tarkused tervikuks. Usun, et minu elukogemused, huvid ja silmaring võimaldavad mul sõltumata teemast pea igaühega ühise keele leida. Tule ja ole sina ise.</p>
+
+      <p>Fotograafia on olnud osa minust juba aastakümneid — alguse saanud soovist jäädvustada igapäevast ilu ja hetki, mis muidu unustuste hõlma vajuvad või sootuks märkamatuks jäävad. Mulle meeldib fotograafia üldiselt, kuid valdavalt pildistan loodust, maastikke, öötaevas toimuvat ja aeg-ajalt ka inimesi. Fotograafiaga tegelemine aitab mul kogeda kohalolu, on pannud mind maailma teise pilguga vaatama ning on minu peamine loominguline väljendus.</p>
     </div>
   </section>
 
-  <!-- SPLIT: PHOTO + QUOTE -->
-  <div class="split">
-    <div class="split-photo">
-      <img src="DSC02335-HDR-FB.jpg" alt="Raba järv hommikuses udus" />
-    </div>
-    <div class="split-text">
-      <span class="section-label">Miks loodus</span>
-      <blockquote>
-        "Loodus ei lahenda su probleeme. Ta lihtsalt vaigistab müra — ja just siis tekib ruum, kus mõtted hakkavad selginema."
-      </blockquote>
-      <cite>— Robert Kask</cite>
-    </div>
-  </div>
+  <!-- SERVICES -->
+  <section class="services">
+    <span class="section-label">Kuidas saan sind aidata</span>
+    <div class="services-grid">
 
-  <!-- MIS SIND OOTAB -->
-  <section class="overview">
-    <div class="overview-grid">
+      <a class="service-item" href="selgus.html">
+        <h3>Selgus</h3>
+        <p>Selguse rännakud looduses — liikumine, vaikus ja rahu ühes kohas.</p>
+        <span class="service-arrow">→</span>
+      </a>
 
-      <!-- LEFT: who it's for + experience -->
-      <div class="overview-left">
-        <h3>See sobib sulle, kui:</h3>
-        <ul class="overview-list">
-          <li>tunned, et vajad pausi ja selgust</li>
-          <li>soovid rääkida, kuid mitte klassikalises kabinetikeskkonnas</li>
-          <li>otsid rahulikku ja turvalist ruumi, kus olla iseendaga</li>
-        </ul>
-        <p>Iga rännak on erinev. Mõni lahkub selgemate mõtetega, teine lihtsalt kergema hingega. Mõnikord ei tule vastused kohe sõnadesse — aga midagi liigub paika.</p>
-      </div>
+      <a class="service-item" href="teraapia.html">
+        <h3>Teraapia</h3>
+        <p>Holistiline regressiooniteraapia — töö minevikuga, et vabastada olevik.</p>
+        <span class="service-arrow">→</span>
+      </a>
 
-      <!-- RIGHT: practical info -->
-      <div class="overview-right">
-        <h3>Praktiline info</h3>
-        <ul class="info-list">
-          <li>
-            <span class="info-label">Asukoht</span>
-            <span>Looduslik keskkond (raba, mets, jõeäär) tunniajase autosõidu kaugusel Tallinnast. Mujal Eestis kokkuleppel.</span>
-          </li>
-          <li>
-            <span class="info-label">Kestus</span>
-            <span>2–3 tundi, olenevalt tempost ja teemast. Lisandub sõiduaeg asukohta ja tagasi.</span>
-          </li>
-          <li>
-            <span class="info-label">Keel</span>
-            <span>Eesti keel, inglise keel</span>
-          </li>
-          <li>
-            <span class="info-label">Riietus</span>
-            <span>Ilmastikule vastav, mugav liikumiseks</span>
-          </li>
-          <li>
-            <span class="info-label">Hind</span>
-            <span>300 EUR</span>
-          </li>
-          <li>
-            <span class="info-label">Broneerimine</span>
-            <span>Kirja teel või telefoni teel. Vähemalt 48 tundi ette.</span>
-          </li>
-        </ul>
-      </div>
+      <a class="service-item" href="fotograafia.html">
+        <h3>Fotograafia</h3>
+        <p>Looduse, maastike ja öötaeva jäädvustamine — maailm teise pilguga.</p>
+        <span class="service-arrow">→</span>
+      </a>
 
     </div>
   </section>
 
   <!-- CTA -->
   <section class="cta">
-    <h2>Tule minuga loodusesse</h2>
-    <p>Broneeri oma selguse ränak ja lähme loodusesse —<br>koos otsima seda, mis sul juba olemas on.</p>
+    <h2>Võta ühendust</h2>
+    <p>Küsimused, koostöösoovid või lihtsalt soov juttu teha — kirjuta mulle.</p>
     <a class="btn btn-white" href="index.html#kontakt">Võta ühendust</a>
   </section>
 
