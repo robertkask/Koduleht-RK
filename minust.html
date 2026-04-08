@@ -262,7 +262,7 @@
     }
 
     .service-item {
-      background: var(--light);
+      background: var(--white);
       padding: 40px 32px;
       text-decoration: none;
       color: var(--black);
@@ -272,7 +272,7 @@
       transition: background 0.25s;
     }
 
-    .service-item:hover { background: var(--white); }
+    .service-item:hover { background: var(--black); color: var(--white); }
 
     .service-item-num {
       font-size: 11px;
@@ -294,6 +294,8 @@
       margin-top: 4px;
     }
 
+    .service-item:hover p { color: rgba(255,255,255,0.55); }
+
     .service-item .service-arrow {
       font-size: 20px;
       margin-top: auto;
@@ -302,7 +304,7 @@
       transition: color 0.2s;
     }
 
-    .service-item:hover .service-arrow { color: var(--black); }
+    .service-item:hover .service-arrow { color: var(--white); }
 
     /* ── CTA ── */
     .cta {
@@ -476,7 +478,7 @@
 
       <a class="service-item" href="selgus.html">
         <h3>Selgus</h3>
-        <p>Selguse rännakud looduses — liikumine, vaikus ja rahu ühes kohas.</p>
+        <p>Selguse rännakud looduses — liikumine, vaikus ja toetav vestlus ühes kohas.</p>
         <span class="service-arrow">→</span>
       </a>
 
