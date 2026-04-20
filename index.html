@@ -190,7 +190,7 @@
       max-width: 440px;
       aspect-ratio: 4/5;
       background: #d6d2cb;
-      border-radius: 6px;
+      border-radius: 20px;
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -462,6 +462,7 @@
       .hero-image { order: -1; }
       .hero-image-inner { max-width: 320px; }
       .hero-text h1 { font-size: clamp(36px, 8vw, 58px); }
+      .hero-text .btn { display: block; text-align: center; }
 
       /* Intro */
       .intro { padding: 72px 24px; }
@@ -487,10 +488,11 @@
     /* Mobile */
     @media (max-width: 480px) {
       .hero { padding: 100px 20px 60px; }
-      .hero-image-inner { max-width: 100%; }
+      .hero-image-inner { max-width: 70vw; }
       .gallery-grid { grid-template-columns: 1fr 1fr; gap: 4px; padding: 0 20px; }
       .services-section { padding: 60px 20px; }
       .intro { padding: 60px 20px; }
+      .intro .btn { display: block; text-align: center; }
       .quote-section { padding: 80px 20px; }
       footer { padding: 0 20px 32px; }
       .gallery-strip-inner { padding: 0 20px; }
@@ -548,8 +550,8 @@
   <section class="intro" id="minust">
     <span class="section-label">Minust</span>
     <h2>Olen terapeut, fotograaf ja looduses rändaja — <em>hingelt otsija.</em></h2>
-    <p>Minu töö ühendab kolm maailma: holistiline regressiooniteraapia, mis aitab inimestel avastada oma sisemist maailma; looduses toimuvad selguse rännakud, mis ühendavad liikumise, vaikuse ja rahu; ning fotograafia, mis jäädvustab selle, mida sõnad ei suuda kirjeldada.</p>
-    <p>Usun, et ilu on kõikjal — nii inimeses kui looduses. Minu missioon on aidata sul seda näha.</p>
+    <p>Minu töö ühendab kolm maailma: holistiline regressiooniteraapia, mis aitab inimestel avastada oma sisemist maailma; looduses toimuvad selguse rännakud, mis ühendavad liikumise, vaikuse ja rahu ning fotograafia, mis jäädvustab selle, mida sõnad ei suuda kirjeldada.</p>
+    <p>Usun, et ilu on kõikjal, nii inimeses kui looduses. Minu missioon on aidata sul seda näha.</p>
     <a class="btn" href="minust.html">Loe lähemalt</a>
   </section>
 
@@ -585,9 +587,9 @@
   <!-- QUOTE -->
   <div class="quote-section">
     <blockquote>
-      "Ilu ei ole see, mida sa näed — see on see, mida sa koged, kui oled piisavalt vaikseks jäänud, et märgata."
+      "Ilu ei ole see, mida sa näed, see on see, mida sa koged, kui oled piisavalt vaikseks jäänud, et märgata."
     </blockquote>
-    <cite>— Robert Kask</cite>
+    <cite>Robert Kask</cite>
   </div>
 
 
